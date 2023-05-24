@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/bootstrap-5.2.3-dist/css/bootstrap.min.css">
+</head>
+<body class="">
+
+    <div class="container-fluid">
+        <div class="">
+            <!-- <div class="  col-12 ">
+                <div class="row"><img src="Images/img_banner.jpg" height="320px" /></div>
+               
+            </div> -->
+            <div class=" col-12">
+                <div class="row" style="margin: auto;">
+                    <nav class=" navbar navbar-expand-lg bg-body-tertiary" style="margin: auto;">
+                        <div class="container-fluid" style="margin-left: 500px;">
+                          <a class="navbar-brand" href="/home"><img src="Images/userTT.png" width="50px" height="50px" style="border-radius: 10px; margin-left: -520px;"></a>
+                          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                          </button>
+                          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                              <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+                              </li>
+                              <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Users
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="/table">User</a></li>
+                                  <li><a class="dropdown-item" href="#">Group</a></li>
+                                  <li><hr class="dropdown-divider"></li>
+                                  <li><a class="dropdown-item" href="#">Role</a></li>
+                                </ul>
+                              <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Products
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="#">Product</a></li>
+                                  <li><a class="dropdown-item" href="#">Category</a></li>
+                                  <li><hr class="dropdown-divider"></li>
+                                  <li><a class="dropdown-item" href="#">Tag</a></li>
+                                </ul>
+                              </li>
+                              <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Settings
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="#">Banner</a></li>
+                                  <li><a class="dropdown-item" href="#">Info</a></li>
+                                </ul>
+                              </li>
+                            </ul>
+                            
+                          </div>
+                        </div>
+                      </nav>
+                      <div class="row">
+                        <div class=" col-12 col-sm-9 col-md-8"></div>
+                        <div class="   col-12    col-sm-3  col-md-4 ">
+                          <form class="d-flex" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                          </form>
+                        </div>
+                    
+                      
+                </div>
+            </div>
+            
+            
+            <div class="text-primary  col-12"><h2 style="text-align: center; color: blue;">User</h2>
+
+                <div class="" style="max-width: 700px; display: flex; margin-left: 1100px; ">
+                  
+                    <form class="" role="search" style="display: flex;">
+                      <input class="form-control me-2" type="search" placeholder="tìm kiếm theo tên" aria-label="Search">
+                      <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                    <div style="margin-left: 20px;">  <button id="add-btn" type="button" class="btn" style="background-color: lightblue;" data-bs-toggle="modal"
+                      data-bs-target="#exampleModal">Add User</button></div>
+                   </div>
+            
+                <div class="row mt-2"  >
+                    <table class="table table-bordered border-primary ms-2 me-2"  >
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col"> Fullname</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Group</th>
+                            <th scope="col">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% for(let i=0;i<objects.length;i++){%>
+                            <tr>
+                                <td><%= i+1 %></td>
+                                <td><%= objects[i].Fullname %></td>
+                                <td><%= objects[i].username %></td>
+                                <td><%= objects[i].email %></td>
+                                <td><%= objects[i].group %></td>
+                                <td class="mx-auto">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" <%= objects[i].status %>>
+                                        <!-- <label class="form-check-label" for="flexCheckDefault">
+                                          Default checkbox
+                                        </label> -->
+                                      </div>
+                                
+                                </td>
+                            </tr>
+
+                             <%}%>
+                        </tbody>
+                      </table>
+                      <!-- thông tin thông số của trang -->
+                      <div class="row" style="display: flex;">
+                        <div class="col-12 col-sm-10 col-md-6">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
+                                aria-live="polite">Đang xem 1 đến 10
+                                trong tổng số 0 mục</div>
+                        </div>
+                        <div class="col-10 col-sm-9 col-md-6 dataTables_pager" style="display: flex;">
+                            <div class="dataTables_length col-6 col-sm-5 col-md-6" id="DataTables_Table_0_length">
+                                <label style="display: flex;">Xem <select style="width: 70px;height: 34px;"
+                                        name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
+                                        class="custom-select custom-select-sm form-control form-control-sm">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select> mục</label>
+                            </div>
+                            <div class="dataTables_paginate paging_simple_numbers" style="margin-left: auto; right: 0px;"
+                                id="DataTables_Table_0_paginate">
+                                <ul class="pagination">
+                                    <li class="paginate_button page-item previous disabled"
+                                        id="DataTables_Table_0_previous"><a href="#"
+                                            aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0"
+                                            class="page-link">Trước</a>
+                                    </li>
+                                    <li class="paginate_button page-item active"><a href="#"
+                                            aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0"
+                                            class="page-link">1</a></li>
+                                    <li class="paginate_button page-item "><a href="#"
+                                            aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0"
+                                            class="page-link">2</a></li>
+                                    <li class="paginate_button page-item next" id="DataTables_Table_0_next"><a
+                                            href="#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0"
+                                            class="page-link">Sau</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- hết  thông tin thông số của trang -->
+                </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header" style="background-color: aquamarine;">
+                              <h1 class="modal-title fs-5" id="exampleModalLabel" style="color: black; margin-left: 190px;">Add new user</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              <div class="container" id="add-form">
+                                  <div class="row">
+                                      <div class="card">
+                                          <div class="card-body col-md-12 ">
+                                              <form action="/table/register" method="post">
+                                                  <div class="mb-3">
+                                                      <label for="fullname" class="form-label">FullName</label>
+                                                      <input type="text" class="form-control" id="nameInput" name="Fullname">
+                                                  </div>
+                                                  <div class="mb-3">
+                                                      <label for="username" class="form-label">Username</label>
+                                                      <input type="text" class="form-control" id="usernameInput" name="username">
+                                                  </div>
+                                                 
+                                                  <div class="mb-3">
+                                                      <label for="email" class="form-label">Email</label>
+                                                      <input type="email" class="form-control" id="emailInput" name="email">
+                                                  </div>
+                                                  <div class="mb-3">
+                                                      <label for="group" class="form-label">Group</label>
+                                                      <select class="form-select" id="groupInput" name="group">
+                                                          <option selected>Choose...</option>
+                                                          <option value="CP17306">CP17306</option>
+                                                          <option value="CP17307">CP17307</option>
+                                                          <option value="CP17308">CP17308</option>
+                                                          <option value="CP17309">CP17309</option>
+                                                          <option value="CP17310">CP17310</option>
+                                                      </select>
+                                                  </div>
+                                                  <div class="mb-3">
+                                                      <label for="status" class="form-label">Status</label>
+                                                      <div class="form-check">
+                                                          <input class="form-check-input" type="checkbox" id="statusInput"
+                                                              name="status" value="on">
+                                                          <label class="form-check-label" for="status">
+                                                              Checked
+                                                          </label>
+                                                      </div>
+                                                  </div>
+                                                  <button type="submit" action="/register" style="margin-left: 130px; width: 150px;" method="post" class="btn btn-primary">Save</button>
+                                              </form>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>         
+                      </div>
+                  </div>
+              </div>
+                
+
+            </div>
+            <div class="row col-12 " style="margin-top: 20px;margin-bottom: 350px;">
+            </div>
+        </div>
+      <!-- <footer class="container-fluid bg-secondary py-3"><div class="container text-white text-center">@Copyright by Hoàng Minh Thông</div></footer> -->
+    </div> 
+    <!-- đít -->
+    <footer class="text-center text-lg-start bg-white text-muted " style="margin-top: -200px;">
+      <!-- Copyright -->
+      <div class="text-center p-4" style="background-color: rgb(238, 127, 182);color: black;">
+          © 2023 Tác giả :
+          <a class="text-reset fw-bold" style="text-decoration: none;" href="https://mdbootstrap.com/">HDCongHanh.com</a>
+      </div>
+      <!-- Copyright -->
+  </footer>
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

@@ -10,6 +10,7 @@ exports.home = (req, res, next) => {
 const md = require('../../models/user.models');
 exports.Login = async (req, res, next) => {
     let msg='';
+    let test = 'test';
     if(req.method == 'POST'){
         
         try {

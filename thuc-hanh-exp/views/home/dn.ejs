@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Bee Student | Đăng Nhập</title>
     <style>
         /* CSS Libraries Used 
 
@@ -50,7 +50,7 @@ body, html {
   font-family: 'Source Sans Pro', sans-serif;
   color: #5c6bc0; 
   font-size: 18px;
-  margin-top:94px;;
+  margin-top:44px;
 }
 
 .box h4 span {
@@ -216,32 +216,34 @@ label span {
 </head>
 
 <body>
-    <h2 style="margin-top: -4px; color: white; text-align: center;"><%=msg%></h2>
+    <h2 style="margin-top: 4px; color: white; text-align: center;"><%=msg%></h2>
     <body id="particles-js"></body>
     <div class="animated bounceInDown">
         <div class="container">
             <span class="error animated tada" id="msg"></span>
             <form class="box" method="post" onsubmit="return checkStuff()">
-                <h4>Admin<span>Dashboard</span></h4>
-                <h5>Sign in to your account.</h5>
-                <input type="text" name="user" placeholder="UserName" autocomplete="off">
-                <input type="password" name="password" placeholder="Passsword" autocomplete="off">
+                <h4>
+                  <img style="width: 100px; height: 80px;" src="/images/logo.png" alt="">
+                </h4>
+                <h5>Đăng nhập vào tài khoản của bạn.</h5>
+                <input type="text" name="user" placeholder="Tài khoản" autocomplete="off">
+                <input type="password" name="password" placeholder="Mật khẩu" autocomplete="off">
                 <label>
                     <input type="checkbox">
                     <span></span>
-                    <small class="rmb" style="margin-left: -150px;">Remember me</small>
+                    <small class="rmb" style="margin-left: -90px;">Nhớ mật khẩu</small>
                 </label>
-                <a href="#" class="forgetpass">Forget Password?</a>
-                <input type="submit" value="Sign in" class="btn1">
+                <a href="#" class="forgetpass">Quên mật khẩu?</a>
+                <input type="submit" value="Đăng Nhập" class="btn1">
             </form>
             <div style="display: flex;">
-            <a href="#" class="dnthave">Don’t have an account?</a>
-            <a href="/dk" style="margin-left: 170px;" class="dnthave"> Sign up</a></div>
+            <a href="#" class="dnthave">Bạn chưa có tài khoản?</a>
+            <a href="/dk" style="margin-left: 155px;" class="dnthave">Đăng kí</a></div>
         </div>
         <div class="footer">
-            <span>Made with <i class="fa fa-heart pulse"></i> <a
+            <span>Được thực hiện bởi<i class="fa fa-heart pulse"></i> <a
                     href="https://www.google.de/maps/place/Augsburger+Puppenkiste/@48.360357,10.903245,17z/data=!3m1!4b1!4m2!3m1!1s0x479e98006610a511:0x73ac6b9f80c4048f"><a
-                        href="https://codepen.io/lordgamer2354">By Boy hanh</a></span>
+                        href="https://zalo.me/g/rtzyfx009">Nhóm Agile - Vip bro max</a></span>
         </div>
     </div>
 </body>

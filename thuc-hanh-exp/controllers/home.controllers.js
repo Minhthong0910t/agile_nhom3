@@ -38,7 +38,7 @@ const md = require('../../models/user.models');
 // }
 exports.Login = async (req, res, next) => {
     let msg='';
-    if(req.method == 'POST'){    
+    if(req.method == 'POST'){
         try {
             const { user, password } = req.body;
             // Find user by email

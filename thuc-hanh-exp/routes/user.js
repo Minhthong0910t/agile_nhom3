@@ -21,8 +21,8 @@ router.get('/:i/add', upload.single("productImage"),check_login.yeu_cau_dang_nha
 router.post('/:i/add', upload.single("productImage"),check_login.yeu_cau_dang_nhap, userCtrl.add);
 
 //edit
-router.get('/edit/:id',check_login.yeu_cau_dang_nhap, userCtrl.edit);
-router.post('/edit/:id',check_login.yeu_cau_dang_nhap, userCtrl.edit);
+router.get('/edit/:id',upload.single("productImage"),check_login.yeu_cau_dang_nhap, userCtrl.edit);
+router.post('/edit/:id',upload.single("productImage"),check_login.yeu_cau_dang_nhap, userCtrl.edit);
 
 
 //delete

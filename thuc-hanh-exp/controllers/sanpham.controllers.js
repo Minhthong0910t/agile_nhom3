@@ -44,6 +44,7 @@ exports.add = async (req, res, next) => {
     }
     res.render('sanpham/addSP', { msg: msg, listTL: listTL });
 }
+
 exports.edit = async (req, res, next) => {
     let msg = '';
     let idsp = req.params.idsp;

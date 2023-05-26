@@ -73,37 +73,52 @@ exports.add = async (req, res, next) => {
     }
     res.render('user/add');
 }
+
 exports.edit = async (req, res, next) => {
     let msg = '';
     let iduser = req.params.id;
     let objUser = await myMD.userModel.findById(iduser);
     console.log(objUser);
+
     if (req.method == 'POST') {
-        // viết kiểm tra hợp lệ dữ liệu...   
-        // tạo đối tượng model để gán dữ liệu
-        let objUser = new myMD.userModel();
-        objUser.user = req.body.user;
-        objUser.password = req.body.password;
-        objUser.img = req.body.originalname;
-        objUser.email = req.body.email;
-        objUser.vaitro = req.body.vaitro;
-
-        objUser._id = iduser; // thực hiển gọi tới sửa
-        // thực hiện ghi vào CSDL
         try {
+            let updatedUser = {
+                user: req.body.user,
+                password: req.body.password,
+                email: req.body.email,
+                vaitro: req.body.vaitro
+            };
 
-            await myMD.userModel.findByIdAndUpdate(iduser, objUser);
-            msg = "đã cập nhập thành công";
-            res.redirect("/user")
-        } catch (error) {
-            msg = "lỗi ghi CSDL" + error.message;
-            console.log(error);
+            // Kiểm tra xem người dùng đã tải lên tệp hình ảnh hay chưa
+            if (req.file !== undefined) {
+                try {
+                    const newImagePath = "./public/uploads/" + req.file.originalname;
+                    await fs.rename(req.file.path, newImagePath);
+
+                    // Cập nhật đường dẫn hình ảnh mới vào đối tượng người dùng
+                    const urlImage = "/uploads/" + req.file.originalname;
+                    updatedUser.img = urlImage;
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            try {
+                await myMD.userModel.findByIdAndUpdate(iduser, updatedUser);
+                console.log(updatedUser);
+            } catch (err) {
+                console.error(err);
+            }
+        } catch (err) {
+            console.error(err);
         }
     }
-    res.render('user/edit', { msg: msg, objUS: objUser });
-}
 
+    res.render('user/edit', { msg: msg, objUS: objUser });
+};
 // delete
+
+
 exports.delete = async (req, res, next) => {
     await myMD.userModel.deleteOne({
         _id: req.params.idus

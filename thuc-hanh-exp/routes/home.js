@@ -9,9 +9,6 @@ router.use( (req, res, next) => {
     next();
 });
 
-router.get('/home',check_login.yeu_cau_dang_nhap, homeCtrl.home);
-
-
 router.get('/',check_login.yeu_cau_dang_nhap, homeCtrl.home);
 
 router.get('/dn',check_login.da_dang_nhap, homeCtrl.Login );

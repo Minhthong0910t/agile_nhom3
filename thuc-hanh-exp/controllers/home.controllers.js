@@ -23,7 +23,7 @@ exports.Login = async (req, res, next) => {
             console.log("Đăng nhập thành công.");
             req.session.userLogin=user1;
              return res.render('home/home', {req: req});
-          }
+            }
           } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Server error' });

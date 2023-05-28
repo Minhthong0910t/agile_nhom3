@@ -1,41 +1,11 @@
 const bcrypt = require('bcrypt');
-exports.index = (req, res, next) => {
-    let msg = '';
-    res.render('home/index', { msg: msg });
-}
-exports.home = (req, res, next) => {
 
-    res.render('home/home');
+exports.home = async (req, res, next) => {
+
+    res.render('home/home', {req : req});
 }
 const md = require('../../models/user.models');
-// exports.Login = async (req, res, next) => {
-//     let msg='';
-//     if(req.method == 'POST'){    
-//         try {  
-//             let objUser=await md.userModel.findOne({user: req.body.user});
-//             console.log(objUser);
-//             if(!objUser){
-//                 console.log("sai thông tin đnhap");
-//                 return res.render('home/dn',{msg: 'Tài khoản không đúng vui lòng đăng nhập lại',req: req});         
-//             }else{
-//                 //có tồn tại tk
-//                 const isPasswordMatch = await bcrypt.compare(req.body.password, objUser.password);
-//                 if(!isPasswordMatch){
-//                     console.log("sai mk");
-//                 return res.render('home/dn',{msg: 'bạn nhập sai mật khẩu vui lòng đăng nhập lại',req: req});
-                    
-//                 }else{
-//                     console.log("đăng nhập thành công");
-//                     req.session.userLogin=objUser;
-//                     return res.render('home/home');
-//                 }
-//         }
-//         }catch (error) {
-//             console.log(error);    
-//         }  
-//     }
-//     return res.render('home/dn', { msg: msg });  
-// }
+
 exports.Login = async (req, res, next) => {
     let msg='';
     if(req.method == 'POST'){
@@ -44,22 +14,22 @@ exports.Login = async (req, res, next) => {
             // Find user by email
             const user1 = await md.userModel.findOne({ user });
             if (!user1) {
-                return res.render('home/dn',{msg: 'Tài khoản không đúng vui lòng đăng nhập lại',req: req});
+                return res.render('home/dn',{msg: 'Tài khoản không đúng vui lòng đăng nhập lại.',req: req});
             }
-           else if (password !== user1.password) {
-                return res.render('home/dn',{msg: 'bạn nhập sai mật khẩu vui lòng đăng nhập lại',req: req});
+            else if (password !== user1.password) {
+                return res.render('home/dn',{msg: 'Bạn nhập sai mật khẩu vui lòng đăng nhập lại.',req: req});
             }
-         else if(user1 && password == user1.password){
-            console.log("đăng nhập thành công");
+            else if(user1 && password == user1.password){
+            console.log("Đăng nhập thành công.");
             req.session.userLogin=user1;
-             return res.render('home/home');
+             return res.render('home/home', {req: req});
           }
           } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Server error' });
           }
     }
-    return res.render('home/dn', { msg: msg });  
+    return res.render('home/dn', { msg: msg , req : req});  
 }
 
 exports.Reg = async (req, res, next) => {
@@ -68,7 +38,7 @@ exports.Reg = async (req, res, next) => {
         console.log(req.body);
         // kiểm tra hợp lệ dữ liệu
         if (req.body.password != req.body.passwd2) {
-            msg = 'Xác nhận password không đúng';
+            msg = 'Xác nhận mật khẩu không trùng khớp.';
             return res.render('home/dk', { msg: msg });
         } else {
            // const salt = await bcrypt.genSalt(10);
@@ -81,7 +51,7 @@ exports.Reg = async (req, res, next) => {
            // objU.password= await bcrypt.hash(req.body.password,salt);
             try {
                 await objU.save();
-                msg = 'Đăng ký thành công';
+                msg = 'Đăng ký thành công.';
             } catch (error) {
                 msg = error.message;
             }
@@ -90,5 +60,11 @@ exports.Reg = async (req, res, next) => {
     res.render('home/dk', { msg: msg });
 }
 exports.Logout = (req, res, next) => {
-
+    req.session.destroy((err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.redirect('/');
+        }
+      });
 }

@@ -15,10 +15,9 @@ router.use( (req, res, next) => {
 
 router.use(bodyParser.urlencoded({extended:false}));
 router.get('/',check_login.yeu_cau_dang_nhap, userCtrl.list);
-router.get('/:i',check_login.yeu_cau_dang_nhap, userCtrl.list);
 
-router.get('/:i/add', upload.single("productImage"),check_login.yeu_cau_dang_nhap, userCtrl.add);
-router.post('/:i/add', upload.single("productImage"),check_login.yeu_cau_dang_nhap, userCtrl.add);
+router.get('/add', upload.single("productImage"),check_login.yeu_cau_dang_nhap, userCtrl.add);
+router.post('/add', upload.single("productImage"),check_login.yeu_cau_dang_nhap, userCtrl.add);
 
 //edit
 router.get('/edit/:id',upload.single("productImage"),check_login.yeu_cau_dang_nhap, userCtrl.edit);

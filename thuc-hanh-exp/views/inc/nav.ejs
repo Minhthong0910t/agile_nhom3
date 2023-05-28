@@ -21,7 +21,7 @@
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <!-- thanh slide menu bên trái -->
 <aside class="app-sidebar">
-    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="images/userTT.png" width="50px"
+    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="/images/userTT.png" width="50px" height="80px"
             alt="User Image">
         <div>
             <p class="app-sidebar__user-name"><b><%= req.session.userLogin.user %></b></p>
@@ -45,5 +45,7 @@
         </li>
         <li><a class="app-menu__item" href="/tl"><i class='app-menu__icon bx bx-task'></i><span
                     class="app-menu__label">Quản lý thể loại</span></a></li>
+        <li><a class="app-menu__item" href="/tl"><i class='app-menu__icon bx bx-blanket'></i><span
+                        class="app-menu__label">Thông tin cá nhân</span></a></li>
     </ul>
 </aside>

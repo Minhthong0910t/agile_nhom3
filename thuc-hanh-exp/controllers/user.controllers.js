@@ -20,7 +20,7 @@ exports.list = async (req, res, next) => {
     count = Math.ceil(count);
 
     console.log(list);
-    res.render('user/list', { listUS: list, req: req , countPage: count});
+    res.render('user/list', { listUS: list, req: req , countPage: count , req: req});
 }
 exports.add = async (req, res, next) => {
     var url_image = '';
@@ -71,7 +71,7 @@ exports.add = async (req, res, next) => {
             }
         }
     }
-    res.render('user/add');
+    res.render('user/add', {req: req});
 }
 
 exports.edit = async (req, res, next) => {
@@ -114,7 +114,7 @@ exports.edit = async (req, res, next) => {
         }
     }
 
-    res.render('user/edit', { msg: msg, objUS: objUser });
+    res.render('user/edit', { msg: msg, objUS: objUser , req: req});
 };
 // delete
 

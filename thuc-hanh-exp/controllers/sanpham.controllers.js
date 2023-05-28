@@ -8,12 +8,12 @@ exports.list = async (req, res, next) => {
         }
     }
     const by = req.query.by || 'giatien'; // Sắp xếp theo giá nếu không có giá trị by
-  const order = req.query.order || 'asc'; // Sắp xếp tăng dần nếu không có giá trị order
+    const order = req.query.order || 'asc'; // Sắp xếp tăng dần nếu không có giá trị order
 
-   let list = await myMD.spModel.find(dieu_kien_loc).populate('idTL').sort({ [by] :order });
+    let list = await myMD.spModel.find(dieu_kien_loc).populate('idTL').sort({ [by] :order });
     let listTL = await myMD.tlModel.find(); 
     console.log(list);
-    res.render('sanpham/list', { listSP: list, listTL: listTL, idTheLoai: req.params.idtl , by : by, order :order});
+    res.render('sanpham/list', { listSP: list, listTL: listTL, idTheLoai: req.params.idtl , by : by, order :order, req: req});
 }
 exports.add = async (req, res, next) => {
     let msg = "";
@@ -42,7 +42,7 @@ exports.add = async (req, res, next) => {
         }
 
     }
-    res.render('sanpham/addSP', { msg: msg, listTL: listTL });
+    res.render('sanpham/addSP', { msg: msg, listTL: listTL , req: req});
 }
 
 exports.edit = async (req, res, next) => {
@@ -70,14 +70,14 @@ exports.edit = async (req, res, next) => {
             console.log(error);
         }
     }
-    res.render('sanpham/editSP', { msg: msg, objSP: objSP, listTL: listTL });
+    res.render('sanpham/editSP', { msg: msg, objSP: objSP, listTL: listTL , req: req});
 }
 exports.chitiet = async (req, res, next) => {
     let idsp = req.params.idsp;
     let listTL = await myMD.tlModel.find();
     let objSP = await myMD.spModel.findById(idsp);
 
-    res.render('sanpham/CTSP', { objSP: objSP, listTL: listTL });
+    res.render('sanpham/CTSP', { objSP: objSP, listTL: listTL , req: req});
 }
 exports.delete = async (req, res, next) => {
     await myMD.spModel.deleteOne({ _id: req.params.idsp });
@@ -96,7 +96,7 @@ exports.delete = async (req, res, next) => {
 exports.listtl = async (req, res, next) => {
     let dieu_kien_loc = null;
     let listtl = await myMD.tlModel.find(dieu_kien_loc);
-    res.render('sanpham/theloai', { listtL: listtl });
+    res.render('sanpham/theloai', { listtL: listtl , req: req});
 }
 exports.addtl = async (req, res, next) => {
     let msg = "";
@@ -118,7 +118,7 @@ exports.addtl = async (req, res, next) => {
             console.log(error);
         }
     }
-    res.render('sanpham/addTL', { listtL: list, msg: msg });
+    res.render('sanpham/addTL', { listtL: list, msg: msg , req: req});
 }
 exports.edittl = async (req, res, next) => {
     let msg = '';
@@ -143,7 +143,7 @@ exports.edittl = async (req, res, next) => {
             console.log(error);
         }
     }
-    res.render('sanpham/editTL', { msg: msg, objTL: objTL });
+    res.render('sanpham/editTL', { msg: msg, objTL: objTL , req: req});
 }
 
 // delete

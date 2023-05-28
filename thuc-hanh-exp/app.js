@@ -7,7 +7,6 @@ var session = require('express-session')
 
 var usersRouter = require('./routes/user');
 var spRouter = require('./routes/sanpham');
-var tableRouter=require('./routes/table');
 var homeRouter=require('./routes/home');
 var TLRouter = require('./routes/theloai');
 var apiRouter = require('./routes/api');
@@ -32,7 +31,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', homeRouter);
 app.use('/user', usersRouter);
 app.use('/sp',spRouter);
-app.use('/table', tableRouter);
 app.use('/home', homeRouter);
 app.use('/tl', TLRouter);
 app.use('/api', apiRouter);

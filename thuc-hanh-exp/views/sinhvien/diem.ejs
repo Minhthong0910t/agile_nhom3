@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Trang Thể Loại</title>
+    <title>Trang Quản lý điểm</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,7 +26,7 @@
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="#"><b>Danh sách thể loại</b></a></li>
+                <li class="breadcrumb-item active"><a href="#"><b>Quản lý điểm</b></a></li>
             </ul>
             <div id="clock"></div>
         </div>
@@ -38,7 +38,7 @@
                         <div class="row element-button">
                             <div class="col-sm-2">
                                 <a class="btn btn-add btn-sm" href="/tl/add" title="Thêm" id="show-emp" ><i class="fas fa-plus"></i>
-                                    Tạo mới thể loại</a>
+                                    Tạo mới điểm</a>
                             </div>
                             <div class="col-sm-2">
                                 <a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập"
@@ -71,7 +71,7 @@
                         <div style="display: flex;">
                             <div class=" col-8 col-sm-6 col-md-6"
                                 style=" margin-left: auto; margin-top: 20px; margin-bottom: 30px;">
-                                <input class="form-control" type="search" placeholder="tìm kiếm theo tên"
+                                <input class="form-control" type="search" placeholder="Tìm kiếm theo tên..."
                                     aria-label="Search">
                             </div>
                             <div class="col-3 col-sm-3 col-md-1">
@@ -83,10 +83,12 @@
                         <table class="table table-bordered col" id="myTable">
                             <thead style="width: auto;">
                                 <tr>
-                                    <th data-sort-by="id" scope="col">ID</th>
-                                    <th data-sort-by="avt" scope="col" style="width: 100px;">avt </th>
-                                    <th data-sort-by="name" scope="col">tên thể loại</th>
-                                    <th data-sort-by="chucnang" scope="col">chức năng</th>                                  
+                                    <th data-sort-by="id" scope="col"style="text-align: center">ID</th>
+                                    <th data-sort-by="avt" scope="col" style="text-align: center">Mã lớp</th>
+                                    <th data-sort-by="avt" scope="col" style="text-align: center">Mã môn</th>
+                                    <th data-sort-by="name" scope="col" style="text-align: center">Tên sinh viên</th>
+                                    <th data-sort-by="avt" scope="col" style="text-align: center">Điểm</th>
+                                    <th data-sort-by="chucnang" scope="col" style="text-align: center">Chức năng</th>                                  
                                 </tr>
                             </thead>
                             <tbody>

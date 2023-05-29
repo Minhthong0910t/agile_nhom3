@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Trang Sản Phẩm</title>
+    <title>Trang danh sách lớp</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,7 +33,7 @@
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="#"><b>Danh sách san pham</b></a></li>
+                <li class="breadcrumb-item active"><a href="#"><b>Danh sách lớp</b></a></li>
             </ul>
             <div id="clock"></div>
         </div>
@@ -46,7 +46,7 @@
                             <div class="col-sm-2">
                                 <a class="btn btn-add btn-sm" href="/sp/add" title="Thêm" id="show-emp"><i
                                         class="fas fa-plus"></i>
-                                    Tạo mới thể loại</a>
+                                    Tạo mới lớp</a>
                             </div>
                             <div class="col-sm-2">
                                 <a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập"
@@ -99,11 +99,11 @@
                             </div>
                             <div class="col-1 col-sm-1 col-md-1">
                                 <button class="btn btn-outline-success " type="submit"
-                                    style="margin-top: 20px; margin-bottom: 30px; margin-left: -250px;">loc</button>
+                                    style="margin-top: 20px; margin-bottom: 30px; margin-left: -250px;">Lọc</button>
                             </div>
                             <div class=" col-6 col-sm-4 col-md-4"
                                 style=" margin-left: auto; margin-top: 20px; margin-bottom: 30px;">
-                                <input class="form-control" type="search" placeholder="tìm kiếm theo tên"
+                                <input class="form-control" type="search" placeholder="Tìm kiếm theo tên..."
                                     aria-label="Search">
                             </div>
                             <div class="col-3 col-sm-3 col-md-1">
@@ -115,13 +115,12 @@
                         <table class="table table-bordered col">
                             <thead style="width: auto;">
                                 <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">avt sp</th>
-                                    <th scope="col"> tên sp</th>
-                                    <th scope="col">loại sp</th>
-                                    <th scope="col"><a  href="/sp?by=giatien&order=<%= (order === 'asc' ? 'desc' : 'asc') %>">Giá sp</a></th>
-                                    <th scope="col">nội dung</th>
-                                    <th scope="col">Chức năng</th>
+                                    <th scope="col" style="text-align: center">ID</th>
+                                    <th scope="col" style="text-align: center">Ảnh đại diện</th>
+                                    <th scope="col" style="text-align: center"> Ngành</th>
+                                    <th scope="col" style="text-align: center">Tên lớp</th>
+                                    <th scope="col" style="text-align: center">Mô tả</th>
+                                    <th scope="col" style="text-align: center">Chức năng</th>
                                 </tr>
                             </thead>
                             <tbody>

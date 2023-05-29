@@ -1,4 +1,4 @@
-var md = require('../../../models/user.models')
+var md = require('../../models/user.models')
 const bcrypt = require('bcrypt');
 exports.list= async (req,res,next)=>{
     try {

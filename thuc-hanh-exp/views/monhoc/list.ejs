@@ -18,13 +18,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-    <script>
-        function layIdTheLoai() {
-            idTl = document.getElementById("locTheLoai").value;
-            window.location = '/sp/locID/' + idTl;
-            console.log('id : ' + idTl);
-        }
-    </script>
 
 </head>
 
@@ -44,7 +37,7 @@
                         <!-- thanh chức năng đầu tiên -->
                         <div class="row element-button">
                             <div class="col-sm-2">
-                                <a class="btn btn-add btn-sm" href="/sp/add" title="Thêm" id="show-emp"><i
+                                <a class="btn btn-add btn-sm" href="/lop/add" title="Thêm" id="show-emp"><i
                                         class="fas fa-plus"></i>
                                     Tạo lớp mới</a>
                             </div>
@@ -66,35 +59,20 @@
                             <thead style="width: auto;">
                                 <tr>
                                     <th scope="col" style="text-align: center">ID</th>
-                                    <th scope="col" style="text-align: center">Ảnh đại diện</th>
-                                    <th scope="col" style="text-align: center">Ngành</th>
                                     <th scope="col" style="text-align: center">Tên lớp</th>
-                                    <th scope="col" style="text-align: center">Mô tả</th>
-                                    <th scope="col" style="text-align: center">Chức năng</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% listSP.forEach((row)=> { %>
+                                <% listClass.forEach((row)=> { %>
                                     <tr>
                                         <td>
                                             <%= row._id %>
                                         </td>
-                                        <td style="text-align: center; vertical-align: middle;max-width: 100px;"><img
-                                                src=<%=row.img %> alt="anh" style="width: 80px; height:
-                                            80px;border-radius:100%">
-                                        </td>
+                                        
                                         <td>
-                                            <%= row.tenSP %>
+                                            <%= row.tenLop %>
                                         </td>
-                                        <td>
-                                            <%= row.idTL.tenTL %>
-                                        </td>
-                                        <td>
-                                            <%= row.giatien %>
-                                        </td>
-                                        <td>
-                                            <%= row.noidung %>
-                                        </td>
+                                        
                                         <td>
                                             <button class="btn btn-primary" type="button" title="Xóa"
                                                 data-toggle="modal" data-target="#ModalDL"><i
@@ -120,7 +98,7 @@
                                                                 <BR> <BR> <BR>
 
                                                                 <a class="btn btn-delete"
-                                                                    href="/sp/delete/<%= row._id %>">Xóa</a>
+                                                                    href="/lop/delete/<%= row._id %>">Xóa</a>
                                                                 <a class="btn btn-cancel" data-dismiss="modal" href="#"
                                                                     style="text-align: center;">Hủy bỏ</a>
                                                             </form> <br>
@@ -130,11 +108,7 @@
                                             </div>
                                             <button class="btn btn-primary btn-sm edit" type="button" title="Sửa"
                                                 id="show-emp">
-                                                <a href="/sp/edit/<%= row._id %>"><i class="fas fa-edit"></i></a>
-                                            </button>
-                                            <button class="btn btn-primary btn-sm info" type="button" title="chi tiết"
-                                                id="show-emp">
-                                                <a href="/sp/CTSP/<%= row._id %>"><i class="fas fa-info"></i></a>
+                                                <a href="/lop/edit/<%= row._id %>"><i class="fas fa-edit"></i></a>
                                             </button>
                                         </td>
                                     </tr>

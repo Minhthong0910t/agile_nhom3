@@ -1,4 +1,4 @@
-var md=require('../../../models/sanpham.models')
+var md=require('../../models/sanpham.models')
 
 exports.list= async (req,res,next)=>{
     try {

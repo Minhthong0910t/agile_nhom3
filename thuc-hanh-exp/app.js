@@ -6,9 +6,11 @@ var logger = require('morgan');
 var session = require('express-session')
 
 var usersRouter = require('./routes/user');
-var spRouter = require('./routes/sanpham');
+var sinhVienRouter = require('./routes/sinhVien');
 var homeRouter=require('./routes/home');
-var TLRouter = require('./routes/theloai');
+var lopRouter = require('./routes/lop');
+var monHocRouter = require('./routes/monHoc');
+var diemRouter = require('./routes/diem');
 var apiRouter = require('./routes/api');
 
 var app = express();
@@ -30,9 +32,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', homeRouter);
 app.use('/user', usersRouter);
-app.use('/sp',spRouter);
+app.use('/sinhVien',sinhVienRouter);
 app.use('/home', homeRouter);
-app.use('/tl', TLRouter);
+app.use('/lop', lopRouter);
+app.use('/monhoc', monHocRouter);
+app.use('/diem', diemRouter);
 app.use('/api', apiRouter);
 
 

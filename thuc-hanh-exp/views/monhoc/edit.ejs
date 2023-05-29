@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Trang thêm Sản Phẩm</title>
+    <title>Sửa lớp</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,58 +26,31 @@
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="#"><b>ADD sản phẩm</b></a></li>
+                <li class="breadcrumb-item active"><a href="#"><b>Sửa lớp</b></a></li>
             </ul>
             <div id="clock"></div>
         </div>
-        <!--MODAL add-->
 
-       <!--MODAL add-->
-   
-                <form action="" method="post">
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label class="control-label">Tên sản phẩm </label>
-                            <input class="form-control" type="text" name="tenSP">
-                        </div>
-                        <div class="form-group col-md-6 ">
-                            <label for="exampleSelect1" class="control-label">loại sản phẩm</label>
-                            <select name="theloai" class="col-md-6" style="height: 20px;">                             
-                                <% listTL.forEach( row =>{      %>
-                                    <option value="<%= row._id %>"><%= row.tenTL %></option>
-                                <%  } )  %>                                                  
-                            </select>
-                        </div>
-                        <div class="form-group  col-md-6">
-                            <label class="control-label">avt sản phẩm</label>
-                            <input class="form-control" type="text" name="img">
-                        </div>
-                        <div class="form-group col-md-6 ">
-                            <label class="control-label">giá sản phẩm</label>
-                            <input class="form-control" type="number" name="giatien">
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label class="control-label">nội dung</label>
-                           <textarea class="form-control" type="text" name="noidung" cols="30" rows="10"></textarea>
-                        </div>
-                    </div><BR> <BR> <BR>
-                    <button type="submit" action="/add"  class="btn btn-primary">Lưu lại</button>
-                    <a class="btn btn-cancel" data-dismiss="modal" href="/sp">Hủy bỏ</a>
-                </form>
-                <BR>
-           
-<!-- hết MODAL add-->
+        <form action="" method="post">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="control-label">Tên lớp</label>
+                    <input class="form-control" value="<%= objSP.tenLop %>" type="text" name="tenLop">
+                </div>
+                
+            </div><BR> <BR> <BR>
+            <button type="submit" action="/edit" class="btn btn-primary">Lưu lại</button>
+            <a class="btn btn-cancel" data-dismiss="modal" href="/sp">Hủy bỏ</a>
+        </form>
+        <BR>
 
-
-
-        <!--MODAL add-->
         <!-- đít -->
-        <footer class="text-center text-lg-start bg-white text-muted " style="margin-top: 300px;">
+        <footer class="text-center text-lg-start bg-white text-muted " style="margin-top: 220px;">
             <!-- Copyright -->
             <div class="text-center p-4" style="background-color: rgb(238, 127, 182);color: black;">
                 © 2023 Tác giả :
                 <a class="text-reset fw-bold" style="text-decoration: none;"
-                href="https://zalo.me/g/rtzyfx009">Nhóm Agile - Vip bro max</a>
+                    href="https://zalo.me/g/rtzyfx009">Nhóm Agile - Vip bro max</a>
             </div>
             <!-- Copyright -->
         </footer>

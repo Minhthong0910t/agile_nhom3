@@ -4,7 +4,7 @@ exports.home = async (req, res, next) => {
 
     res.render('home/home', {req : req});
 }
-const md = require('../../models/user.models');
+const md = require('../models/user.models');
 
 exports.Login = async (req, res, next) => {
     let msg='';

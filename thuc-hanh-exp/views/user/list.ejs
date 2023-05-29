@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Trang Người Dùng</title>
+    <title>Người Dùng</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,37 +42,11 @@
                                         class="fas fa-plus"></i>
                                     Tạo mới người dùng</a> 
                             </div>
-                            <div class="col-sm-2">
-                                <a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập"
-                                    onclick="myFunction(this)"><i class="fas fa-file-upload"></i> Tải từ file</a>
-                            </div>
-
-                            <div class="col-sm-2">
-                                <a class="btn btn-delete btn-sm print-file" type="button" title="In"
-                                    onclick="myApp.printTable()"><i class="fas fa-print"></i> In dữ liệu</a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button"
-                                    title="Sao chép"><i class="fas fa-copy"></i> Sao chép</a>
-                            </div>
-
-                            <div class="col-sm-2">
-                                <a class="btn btn-excel btn-sm" href="" title="In"><i class="fas fa-file-excel"></i>
-                                    Xuất Excel</a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a class="btn btn-delete btn-sm pdf-file" type="button" title="In"
-                                    onclick="myFunction(this)"><i class="fas fa-file-pdf"></i> Xuất PDF</a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a class="btn btn-delete btn-sm" type="button" title="Xóa" onclick="myFunction(this)"><i
-                                        class="fas fa-trash-alt"></i> Xóa tất cả </a>
-                            </div>
                         </div>
                         <!-- thanh tìm kiếm -->
                         <form role="search" style=" margin-top: 20px; margin-bottom: 30px; display: flex; float: right;">
-                            <input class="form-control col-6 col-sm-6 col-md-9" type="search" placeholder="Search" aria-label="Search" name="user">
-                            <button class="btn btn-outline-info" type="submit">Search</button>
+                            <input class="form-control col-6 col-sm-6 col-md-9" type="search" placeholder="Tìm tên đăng nhập..." aria-label="Search" name="user">
+                            <button class="btn btn-outline-info"  style="margin: 0px;" type="submit"><i style="height: 20px; padding-top: 6px; " class=' bx bx-search-alt-2'></i></button>
                         </form>
                         <!-- thay đỏi -->
                         <table class="table table-bordered col">
@@ -81,7 +55,7 @@
                                     <th scope="col" style="text-align: center">ID</th>
                                     <th scope="col" style="width: 150px;text-align: center">Ảnh đại diện </th>
                                     <th scope="col" style="text-align: center">Tên đăng nhập</th>
-                                    <th scope="col" style="text-align: center">Email</th>
+                                 
                                     <th scope="col" style="text-align: center">Vai trò</th>
                                     <th scope="col" style="text-align: center">Chức năng</th>
                                 </tr>
@@ -100,9 +74,7 @@
                                             
                                             <%= user.user %>
                                         </td>
-                                        <td>
-                                            <%= user.email %>
-                                        </td>
+                                
                                         <td>
                                             <%= user.vaitro %>
                                         </td>

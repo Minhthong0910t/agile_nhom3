@@ -1,4 +1,4 @@
-var myMD = require('../models/sanpham.models');
+var myMD = require('../models/agile.models');
 exports.list = async (req, res, next) => {
     let dieu_kien_loc = null;
     if( req.params.idtl != '0'){
@@ -10,7 +10,7 @@ exports.list = async (req, res, next) => {
     const by = req.query.by || 'giatien'; // Sắp xếp theo giá nếu không có giá trị by
     const order = req.query.order || 'asc'; // Sắp xếp tăng dần nếu không có giá trị order
 
-    let list = await myMD.spModel.find(dieu_kien_loc).populate('idTL').sort({ [by] :order });
+    let list = await myMD.studentModel.find(dieu_kien_loc).populate('idTL').sort({ [by] :order });
     let listTL = await myMD.tlModel.find(); 
     console.log(list);
     res.render('sinhvien/list', { listSP: list, listTL: listTL, idTheLoai: req.params.idtl , by : by, order :order, req: req});

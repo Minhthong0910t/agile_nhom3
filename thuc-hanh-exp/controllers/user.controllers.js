@@ -1,5 +1,5 @@
 const { log } = require('console');
-var myMD = require('../../models/user.models');
+var myMD = require('../models/user.models');
 
 var fs = require('fs');
 
@@ -47,7 +47,6 @@ exports.add = async (req, res, next) => {
             objUS.user = req.body.user;
             objUS.password = req.body.password;
             objUS.img = req.file.originalname;
-            objUS.email = req.body.email;
             objUS.vaitro = req.body.vaitro;
             try {
                 let new_product = await objUS.save();
@@ -60,7 +59,6 @@ exports.add = async (req, res, next) => {
             let objUS = new myMD.userModel();
             objUS.user = req.body.user;
             objUS.password = req.body.password;
-            objUS.email = req.body.email;
             objUS.vaitro = req.body.vaitro;
             try {
                 let new_product = await objUS.save();
@@ -85,7 +83,6 @@ exports.edit = async (req, res, next) => {
             let updatedUser = {
                 user: req.body.user,
                 password: req.body.password,
-                email: req.body.email,
                 vaitro: req.body.vaitro
             };
 

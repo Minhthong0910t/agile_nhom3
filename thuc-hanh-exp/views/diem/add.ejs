@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Trang Update người dùng</title>
+    <title>Tạo lớp mới</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,32 +26,33 @@
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="#"><b>Update người dùng</b></a></li>
+                <li class="breadcrumb-item active"><a href="#"><b>Tạo lớp mới</b></a></li>
             </ul>
             <div id="clock"></div>
         </div>
-       
-        <form action="" method="post">          
-            <div class="row">
-                <div class="form-group col-md-10">
-                    <label class="control-label">Tên đăng nhập </label>
-                    <input class="form-control" type="text" name="tenTL" value="<%= objTL.tenTL%>">
-                </div>               
-                <div class="form-group  col-md-10">
-                    <label class="control-label">avt thể loại</label>
-                    <input class="form-control" type="text" name="img" value="<%= objTL.img%>">
-                </div>              
-            </div>
-            <BR>
-            <BR>
-            <BR>
-            <button type="submit" action="/edit" class="btn btn-primary">update</button>
-            <!-- <a href="/user" class="btn btn-add" href="/user" type="submit">save</a> -->
-            <a class="btn btn-cancel" data-dismiss="modal" href="/tl">Hủy bỏ</a>
-        </form>
+        <!--MODAL add-->
 
+       <!--MODAL add-->
+   
+                <form action="" method="post">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Tên lớp</label>
+                            <input class="form-control" type="text" name="tenLop">
+                        </div>
+                    </div><BR> <BR> <BR>
+                    <button type="submit" action="/add"  class="btn btn-primary">Lưu lại</button>
+                    <a class="btn btn-cancel" data-dismiss="modal" href="/lop">Hủy bỏ</a>
+                </form>
+                <BR>
+           
+<!-- hết MODAL add-->
+
+
+
+        <!--MODAL add-->
         <!-- đít -->
-        <footer class="text-center text-lg-start bg-white text-muted " style="margin-top: 220px;">
+        <footer class="text-center text-lg-start bg-white text-muted " style="margin-top: 300px;">
             <!-- Copyright -->
             <div class="text-center p-4" style="background-color: rgb(238, 127, 182);color: black;">
                 © 2023 Tác giả :

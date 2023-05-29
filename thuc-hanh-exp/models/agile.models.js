@@ -22,7 +22,7 @@ const markSchema = new db.mongoose.Schema(
         diemLab: {type: Number, require: true},
         diemASM: {type: Number, require: true},
         diemThi: {type: Number, require: true},
-        id_monHoc: {type: db.mongoose.Schema.Type.ObjectId, ref: 'subjectModel'}
+        id_monHoc: {type: db.mongoose.Schema.Types.ObjectId, ref: 'subjectModel'}
     }, {collection: 'diem'}
 );
 let markModel = db.mongoose.model('markModel', markSchema);
@@ -37,9 +37,9 @@ let subjectModel = db.mongoose.model('subjectModel', subjectSchema);
 
 const studentListSchema = new db.mongoose.Schema(
     {
-        id_lop: {type: db.mongoose.Schema.Type.ObjectId, ref: 'subjectModel'},
-        id_sv: {type: db.mongoose.Schema.Type.ObjectId, ref: 'studentModel'},
-        id_diem: {type: db.mongoose.Schema.Type.ObjectId, ref: 'markModel'}
+        id_lop: {type: db.mongoose.Schema.Types.ObjectId, ref: 'subjectModel'},
+        id_sv: {type: db.mongoose.Schema.Types.ObjectId, ref: 'studentModel'},
+        id_diem: {type: db.mongoose.Schema.Types.ObjectId, ref: 'markModel'}
     }, {collection: 'dsSinhVien'}
 );
 let studentListModel = db.mongoose.model('studentListModel', studentListSchema);

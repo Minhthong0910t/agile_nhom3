@@ -28,7 +28,7 @@
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item active"><a href="#"><b>Quản lý điểm</b></a></li>
             </ul>
-            <span><%= msg %></span>
+
             <div id="clock"></div>
         </div>
         <div class="row">
@@ -61,18 +61,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% listtL.forEach((row) => { %>
+                                <% list.forEach((row) => { %>
                                     <tr>
                                         <tr>                                      
                                             <td>
                                                 <%= row._id %>
                                             </td>
-                                            <td style="text-align: center; vertical-align: middle;max-width: 100px;"><img
-                                                    src=<%= row.img %> alt="anh" style="width: 80px; height:
-                                                80px;border-radius:100%">
+                                            <td>
+                                                <%= row.diemQuiz %>
                                             </td>
                                             <td>
-                                                <%= row.tenTL %>
+                                                <%= row.diemLab %>
+                                            </td>   
+                                            <td>
+                                                <%= row.diemASM %>
+                                            </td>   
+                                            <td>
+                                                <%= row.diemThi %>
+                                            </td>   
+                                            <td>
+                                                <%= row.id_monHoc.tenMH %>
                                             </td>   
                                             <td>
                                                 <button class="btn btn-primary" type="button" title="Xóa"

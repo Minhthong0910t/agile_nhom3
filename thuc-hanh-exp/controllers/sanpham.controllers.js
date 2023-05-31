@@ -13,7 +13,7 @@ exports.list = async (req, res, next) => {
     let list = await myMD.spModel.find(dieu_kien_loc).populate('idTL').sort({ [by] :order });
     let listTL = await myMD.tlModel.find(); 
     console.log(list);
-    res.render('sinhvien/list', { listSP: list, listTL: listTL, idTheLoai: req.params.idtl , by : by, order :order, req: req});
+    res.render('sinhVien/list', { listSP: list, listTL: listTL, idTheLoai: req.params.idtl , by : by, order :order, req: req});
 }
 exports.add = async (req, res, next) => {
     let msg = "";

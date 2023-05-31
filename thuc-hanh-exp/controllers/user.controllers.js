@@ -121,12 +121,10 @@ exports.edit = async (req, res, next) => {
 // delete
 
 
-exports.delete = async (req, res, next) => {
-    await myMD.userModel.deleteOne({
-        _id: req.params.idus
-    });
-    console.log("delete thành công:" + req.params.idus);
-    res.redirect("/user");
+
+exports.deleteUser= async (req,res,next)=>{
+    await myMD.userModel.deleteOne({_id: req.body.IdDelete});
+    res.redirect('/user/1');
 
 }
 

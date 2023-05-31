@@ -2,6 +2,7 @@ const { log } = require('console');
 var myMD = require('../models/user.models');
 
 var fs = require('fs');
+var msg = '';
 
 exports.list = async (req, res, next) => {
     let page=req.params.i;  // trang
@@ -13,105 +14,109 @@ exports.list = async (req, res, next) => {
     let start=(page-1)*perPage; // vị trí 0
    
     let list = await myMD.userModel.find(timkiemUser).skip(start).limit(perPage);
-    let msg = list.length + " sản phẩm";
-
+    
     let countlist = await myMD.userModel.find(timkiemUser);
     let count = countlist.length / perPage;
     count = Math.ceil(count);
 
     console.log(list);
-    res.render('user/list', { listUS: list, req: req , countPage: count , req: req});
+    res.render('user/list', { listUS: list, req: req , countPage: count , req: req , msg: msg});
 }
 exports.add = async (req, res, next) => {
-    var url_image = '';
-    let msg = '';
+
     //lấy ds category truyền vào
     if (req.method == 'POST') {
         try {
-            await fs.rename(
-                req.file.path,
-                "./public/uploads/" + req.file.originalname,
-                function (err) {
-                    if (err) throw err;
-                    //không có lỗi ==> upload thành công
-                    url_image = "/uploads/" + req.file.originalname;
-                    console.log("upload thanh cong" + url_image);
+            fs.renameSync(req.file.path, "./public/uploads/" + req.file.originalname);
+            let url_file = '/uploads/' + req.file.originalname;
+
+            if (req.file != undefined) {
+                let objUS = new myMD.userModel();
+                objUS.user = req.body.user;
+                objUS.password = req.body.password;
+                objUS.image = url_file;
+                objUS.vaitro = req.body.vaitro;
+                try {
+                    let new_product = await objUS.save();
+                    console.log(new_product);
+    
+                } catch (err) {
+                    console.log(err);
                 }
-            );
+            } else {
+                let objUS = new myMD.userModel();
+                objUS.user = req.body.user;
+                objUS.password = req.body.password;
+                objUS.vaitro = req.body.vaitro;
+                try {
+                    let new_product = await objUS.save();
+                    console.log(new_product);
+    
+                } catch (err) {
+                    console.log(err);
+                }
+            }
         } catch (error) {
             // nếu có lỗi thì xảy ra lỗi ở đây
             console.log(error);
         }
-        if (req.file != undefined) {
-            let objUS = new myMD.userModel();
-            objUS.user = req.body.user;
-            objUS.password = req.body.password;
-            objUS.img = req.file.originalname;
-            objUS.vaitro = req.body.vaitro;
-            try {
-                let new_product = await objUS.save();
-                console.log(new_product);
-
-            } catch (err) {
-                console.log(err);
-            }
-        } else {
-            let objUS = new myMD.userModel();
-            objUS.user = req.body.user;
-            objUS.password = req.body.password;
-            objUS.vaitro = req.body.vaitro;
-            try {
-                let new_product = await objUS.save();
-                console.log(new_product);
-
-            } catch (err) {
-                console.log(err);
-            }
-        }
+        
     }
-    res.render('user/add', {req: req});
+    res.render('user/add', {req: req, msg: msg});
 }
 
 exports.edit = async (req, res, next) => {
     let msg = '';
     let iduser = req.params.id;
     let objUser = await myMD.userModel.findById(iduser);
-    console.log(objUser);
+   
 
     if (req.method == 'POST') {
-        try {
-            let updatedUser = {
-                user: req.body.user,
-                password: req.body.password,
-                vaitro: req.body.vaitro
-            };
 
-            // Kiểm tra xem người dùng đã tải lên tệp hình ảnh hay chưa
-            if (req.file !== undefined) {
-                try {
-                    const newImagePath = "./public/uploads/" + req.file.originalname;
-                    await fs.rename(req.file.path, newImagePath);
+        if (req.file != undefined) {
 
-                    // Cập nhật đường dẫn hình ảnh mới vào đối tượng người dùng
-                    const urlImage = "/uploads/" + req.file.originalname;
-                    updatedUser.img = urlImage;
-                } catch (error) {
-                    console.error(error);
-                }
-            }
+            fs.renameSync(req.file.path, "./public/uploads/" + req.file.originalname);
+            let url_file = '/uploads/' + req.file.originalname;
 
             try {
-                await myMD.userModel.findByIdAndUpdate(iduser, updatedUser);
-                console.log(updatedUser);
-            } catch (err) {
-                console.error(err);
+
+                let objUS = new myMD.userModel();
+                objUS.user = req.body.user;
+                objUS.password = req.body.password;
+                req.file ? objUS.image = url_file :
+                objUS.vaitro = req.body.vaitro;
+
+
+                objUS._id = iduser;
+
+                await myMD.userModel.findByIdAndUpdate(iduser, objUS);
+                msg = 'Cập Nhật Thành Công'
+            } catch (error) {
+                msg = 'Lỗi Ghi CSDL: ' + error.message;
+                console.log(error);
             }
-        } catch (err) {
-            console.error(err);
+        } else {
+            try {
+                let objUS = new myMD.userModel();
+                objUS.user = req.body.user;
+                objUS.password = req.body.password;
+                objUS.vaitro = req.body.vaitro;
+
+                objUS._id = iduser;
+
+                await myMD.userModel.findByIdAndUpdate(iduser, objUS);
+                msg = 'Cập Nhật Thành Công'
+            } catch (error) {
+                msg = 'Lỗi Ghi CSDL: ' + error.message;
+                console.log(error);
+            }
         }
+
     }
 
-    res.render('user/edit', { msg: msg, objUS: objUser , req: req});
+    
+
+    res.render('user/edit', { msg: msg, objUS: objUser , req: req, msg: msg});
 };
 // delete
 

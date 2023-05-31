@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt');
-
+var msg = '';
 exports.home = async (req, res, next) => {
 
-    res.render('home/home', {req : req});
+    res.render('home/home', {req : req , msg: msg});
 }
 const md = require('../models/user.models');
 

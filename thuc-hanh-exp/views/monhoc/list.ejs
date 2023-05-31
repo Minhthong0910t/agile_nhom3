@@ -37,10 +37,16 @@
                     <div class="tile-body">
                         <!-- thanh chức năng đầu tiên -->
                         <div class="row element-button">
+                            
                             <div class="col-sm-2">
-                                <a class="btn btn-add btn-sm" href="/lop/add" title="Thêm" id="show-emp"><i
+                                <a class="btn btn-add btn-sm" href="/monHoc/add" title="Thêm" id="show-emp"><i
                                         class="fas fa-plus"></i>
-                                    Tạo lớp mới</a>
+                                    Tạo môn học mới</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-add btn-sm" href="/diem" title="Thêm" id="show-emp"><i
+                                        class="fas fa-plus"></i>
+                                    Xem danh sách điểm</a>
                             </div>
                             
                         </div>
@@ -59,27 +65,27 @@
                         <table class="table table-bordered col">
                             <thead style="width: auto;">
                                 <tr>
-                                    <th scope="col" style="text-align: center">ID</th>
-                                    <th scope="col" style="text-align: center">Tên lớp</th>
+                                    <th scope="col" style="text-align: center">Tên môn học</th>
+                                    <th scope="col" style="text-align: center">Số tín chỉ</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% listClass.forEach((row)=> { %>
+                                <% list.forEach((row)=> { %>
                                     <tr>
                                         <td>
-                                            <%= row._id %>
+                                            <%= row.tenMH %>
                                         </td>
                                         
                                         <td>
-                                            <%= row.tenLop %>
+                                            <%= row.tinChi %>
                                         </td>
                                         
                                         <td>
                                             <button class="btn btn-primary" type="button" title="Xóa"
-                                                data-toggle="modal" data-target="#ModalDL"><i
+                                                data-toggle="modal" data-target="#ModalDL<%= row._id %>"><i
                                                     class="fas fa-trash-alt"></i>
                                             </button>
-                                            <div class="modal fade" id="ModalDL" tabindex="-1" role="dialog"
+                                            <div class="modal fade" id="ModalDL<%= row._id %>" tabindex="-1" role="dialog"
                                                 aria-hidden="true" data-backdrop="static" data-keyboard="false">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
@@ -93,13 +99,12 @@
                                                                     </span>
                                                                 </div>
                                                             </div>
-                                                            <form>
+                                                            <form method="post" action="/monHoc/delete/<%= row._id %>">
                                                                 <h4 style="text-align: center;">bạn có chắc muốn xóa dự
                                                                     liệu này không</h4>
                                                                 <BR> <BR> <BR>
 
-                                                                <a class="btn btn-delete"
-                                                                    href="/lop/delete/<%= row._id %>">Xóa</a>
+                                                                    <button type="submit" class="btn btn-primary">Xóa</button>
                                                                 <a class="btn btn-cancel" data-dismiss="modal" href="#"
                                                                     style="text-align: center;">Hủy bỏ</a>
                                                             </form> <br>
@@ -109,7 +114,7 @@
                                             </div>
                                             <button class="btn btn-primary btn-sm edit" type="button" title="Sửa"
                                                 id="show-emp">
-                                                <a href="/lop/edit/<%= row._id %>"><i class="fas fa-edit"></i></a>
+                                                <a href="/monHoc/edit/<%= row._id %>"><i class="fas fa-edit"></i></a>
                                             </button>
                                         </td>
                                     </tr>

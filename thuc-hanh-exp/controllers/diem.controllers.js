@@ -2,7 +2,7 @@ var diemModel = require('../models/agile.models');
 
 exports.list = async(req, res, next) => {
     let listDiem = await diemModel.markModel.find().sort({diemThi: 1}).populate('id_monHoc');
-    res.render('diem/list', {list: listDiem});
+    res.render('diem/list', {list: listDiem, req: req});
 }
 
 exports.add = async(req, res, next) => {

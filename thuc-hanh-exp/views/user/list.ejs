@@ -28,6 +28,7 @@
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item active"><a href="#"><b>Danh sách người dùng</b></a></li>
             </ul>
+            <span><%= msg %></span>
             <div id="clock"></div>
         </div>
         <div class="row">
@@ -68,7 +69,7 @@
                                             <%= user._id %>
                                         </td>
                                         <td style="text-align: center; vertical-align: middle;max-width: 100px;">
-                                            <img src="/uploads/<%= user.img %>" alt="anh" style="width: 80px; height: 80px;">
+                                            <img src="<%= user.image %>" alt="anh" style="width: 80px; height: 80px;">
                                         </td>
                                         <td>
                                             

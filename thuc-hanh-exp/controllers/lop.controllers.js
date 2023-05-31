@@ -1,14 +1,13 @@
 var myMD = require('../models/agile.models');
+var msg = "";
 
 exports.list = async (req, res, next) => {
 
     let list = await myMD.classModel.find();
-    res.render('lop/list', { listClass: list, req: req});
+    res.render('lop/list', { listClass: list, req: req , msg: msg});
 }
 
 exports.add = async (req, res, next) => {
-    let msg = "";
-
     // lấy ds thể loại truyền ra view 
     let list = await myMD.classModel.find();
 
@@ -32,7 +31,7 @@ exports.add = async (req, res, next) => {
 }
 
 exports.edit = async (req, res, next) => {
-    let msg = '';
+    
     let idsp = req.params.idsp;
     let objClass = await myMD.classModel.findById(idsp);
     if (req.method == 'POST') {

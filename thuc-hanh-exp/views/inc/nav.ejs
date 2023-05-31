@@ -52,9 +52,7 @@
             <% if(req.session.userLogin.vaitro==='Admin' ){ %>
                 <a class="app-menu__item " href="/user">
                     <% }else{ %>
-                        <a class="app-menu__item " onclick="alert('Bạn không có quyền truy cập!')" href="">
-                            <!-- <div id="my-message-div">lỗi nha</div> -->
-                            
+                        <a class="app-menu__item " onclick="alert('Bạn không có quyền truy cập!')" href="">  
                             <% } %>
                                 <i class='app-menu__icon bx bx-id-card'></i>
                                 <span class="app-menu__label">Quản lý tài khoản</span>

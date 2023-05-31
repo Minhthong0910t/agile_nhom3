@@ -21,13 +21,7 @@
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <!-- thanh slide menu bên trái -->
 <aside class="app-sidebar">
-    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" 
-        <% if(req.session.userLogin.image == null || req.session.userLogin.image == ''){ %>
-            src="/images/logo.png" 
-        <% } else {  %>
-            src="<%= req.session.userLogin.image %>"
-            <% } %>
-        width="50px"
+    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="/images/logo.png" width="50px"
             alt="User Image">
         <div>
             <p class="app-sidebar__user-name"><b>
@@ -40,7 +34,9 @@
     <hr>
     <!-- thanh bảng menu -->
     <ul class="app-menu">
-
+        <!-- <li><a class="app-menu__item haha" href="phan-mem-ban-hang.html"><i
+                    class='app-menu__icon bx bx-cart-alt'></i>
+                <span class="app-menu__label">POS Bán Hàng</span></a></li> -->
         <li><a class="app-menu__item" href="/home">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="currentColor"
                     class="bi bi-house-door" viewBox="0 0 16 16">
@@ -58,7 +54,8 @@
                                 <span class="app-menu__label">Quản lý tài khoản</span>
                         </a>
         </li>
-
+        <!-- <li><a class="app-menu__item" href="/user"><i class='app-menu__icon bx bx-user-voice'></i><span
+                    class="app-menu__label">Quản lý khách hàng</span></a></li> -->
         <li><a class="app-menu__item" href="/lop"><i class='app-menu__icon bx bx-purchase-tag-alt'>
                 </i><span class="app-menu__label">Danh sách lớp</span></a>
         </li>

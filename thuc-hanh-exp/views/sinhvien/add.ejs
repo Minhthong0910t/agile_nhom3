@@ -31,39 +31,28 @@
             <span><%= msg %></span>
             <div id="clock"></div>
         </div>
-        <!--MODAL add-->
-
-       <!--MODAL add-->
    
                 <form action="" method="post">
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label class="control-label">Tên sản phẩm </label>
-                            <input class="form-control" type="text" name="tenSP">
-                        </div>
-                        <div class="form-group col-md-6 ">
-                            <label for="exampleSelect1" class="control-label">loại sản phẩm</label>
-                            <select name="theloai" class="col-md-6" style="height: 20px;">                             
-                                <% listTL.forEach( row =>{      %>
-                                    <option value="<%= row._id %>"><%= row.tenTL %></option>
-                                <%  } )  %>                                                  
-                            </select>
+                            <label class="control-label">Tên sinh viên </label>
+                            <input class="form-control" type="text" name="tenSV">
                         </div>
                         <div class="form-group  col-md-6">
-                            <label class="control-label">avt sản phẩm</label>
-                            <input class="form-control" type="text" name="img">
+                            <label class="control-label">Giới tính</label>
+                            <select class="form-control" id="exampleSelect1" name="gioiTinh">
+                                <option>Nam</option>
+                                <option>Nữ</option>
+                            </select>
                         </div>
                         <div class="form-group col-md-6 ">
-                            <label class="control-label">giá sản phẩm</label>
-                            <input class="form-control" type="number" name="giatien">
+                            <label class="control-label">Ngày sinh</label>
+                            <input class="form-control" type="date" name="ngaySinh">
                         </div>
-                        <div class="form-group col-md-12">
-                            <label class="control-label">nội dung</label>
-                           <textarea class="form-control" type="text" name="noidung" cols="30" rows="10"></textarea>
-                        </div>
+                        
                     </div><BR> <BR> <BR>
                     <button type="submit" action="/add"  class="btn btn-primary">Lưu lại</button>
-                    <a class="btn btn-cancel" data-dismiss="modal" href="/sp">Hủy bỏ</a>
+                    <a class="btn btn-cancel" data-dismiss="modal" href="/sinhVien">Hủy bỏ</a>
                 </form>
                 <BR>
            

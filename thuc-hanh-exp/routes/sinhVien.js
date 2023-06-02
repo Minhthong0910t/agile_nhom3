@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var sinhVienCtrl = require('../controllers/sanpham.controllers');
+var sinhVienCtrl = require('../controllers/sinhvien.controllers');
 var check_login = require('../middlewares/check_login');
 
 
@@ -20,10 +20,9 @@ router.get('/edit/:idsp',check_login.yeu_cau_dang_nhap, sinhVienCtrl.edit);
 router.post('/edit/:idsp',check_login.yeu_cau_dang_nhap, sinhVienCtrl.edit);
 
 //delete
-router.get("/delete/:idsp",check_login.yeu_cau_dang_nhap,sinhVienCtrl.delete);
-router.delete("/delete/:idsp",check_login.yeu_cau_dang_nhap,sinhVienCtrl.delete);
+router.post('/delete',sinhVienCtrl.delete);
 
-router.get('/CTSP/:idsp',check_login.yeu_cau_dang_nhap, sinhVienCtrl.chitiet);
+
 
 
 module.exports = router;

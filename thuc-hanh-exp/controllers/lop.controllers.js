@@ -2,7 +2,7 @@ var myMD = require('../models/agile.models');
 var msg = "";
 
 exports.list = async (req, res, next) => {
-
+    var msg = "";
     let list = await myMD.classModel.find();
     res.render('lop/list', { listClass: list, req: req , msg: msg});
 }
@@ -31,16 +31,16 @@ exports.add = async (req, res, next) => {
 }
 
 exports.edit = async (req, res, next) => {
-    
-    let idsp = req.params.idsp;
+    msg = ''
+    let idsp = req.params.id;
     let objClass = await myMD.classModel.findById(idsp);
     if (req.method == 'POST') {
         // viết kiểm tra hợp lệ dữ liệu...   
         // tạo đối tượng model để gán dữ liệu
         let objClass = new myMD.classModel();
         objClass.tenLop = req.body.tenLop;
-        objClass._id = idsp; // thực hiển gọi tới sửa
-        // thực hiện ghi vào CSDL
+        objClass._id = idsp; 
+        
         try {
             await myMD.classModel.findByIdAndUpdate(idsp, objClass);
             msg = "Đã cập nhập thành công";
@@ -49,12 +49,12 @@ exports.edit = async (req, res, next) => {
             console.log(error);
         }
     }
-    res.render('lop/edit', { msg: msg, objClass : objClass , req: req});
+    res.render('lop/edit', { msg: msg, objClass: objClass , req: req});
 }
-exports.delete = async (req, res, next) => {
-    await myMD.classModel.deleteOne({ _id: req.params.idsp });
-    console.log("delete thành công:" + req.params.idsp);
-    res.redirect("/lop");
+
+exports.delete= async (req,res,next)=>{
+    await myMD.classModel.deleteOne({_id: req.body.IdDelete});
+    res.redirect('/lop');
 }
 
 

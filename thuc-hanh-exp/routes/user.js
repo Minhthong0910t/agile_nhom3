@@ -25,11 +25,7 @@ router.post('/edit/:id',upload.single("productImage"),check_login.yeu_cau_dang_n
 
 
 //delete
-// router.get("/delete/:idus",check_login.yeu_cau_dang_nhap,userCtrl.delete);
 router.post('/delete',userCtrl.deleteUser);
-// router.delete("/delete/:idus",check_login.yeu_cau_dang_nhap,userCtrl.delete);
-
-
 router.get('/:user',check_login.yeu_cau_dang_nhap, userCtrl.list)
 
 

@@ -19,7 +19,6 @@ router.post('/add',check_login.yeu_cau_dang_nhap, lopCtrl.add);
 router.get('/edit/:id',check_login.yeu_cau_dang_nhap, lopCtrl.edit);
 router.post('/edit/:id',check_login.yeu_cau_dang_nhap, lopCtrl.edit);
 
-router.get("/delete/:idsp",check_login.yeu_cau_dang_nhap,lopCtrl.delete);
-router.delete("/delete/:idsp",check_login.yeu_cau_dang_nhap,lopCtrl.delete);
+router.post('/delete',check_login.yeu_cau_dang_nhap,lopCtrl.delete);
 
 module.exports = router;

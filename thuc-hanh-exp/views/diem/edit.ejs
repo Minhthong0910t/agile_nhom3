@@ -35,15 +35,25 @@
         <form action="" method="post">
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label class="control-label">Tên lớp</label>
-                    <input class="form-control" value="<%= objSP.tenLop %>" type="text" name="tenLop">
+                    <label class="control-label">Tên môn học</label>
+                    <select class="form-control" name="tenMH" value="<%= objDiem.diemQuiz %>">
+                        <% listMH.forEach( row => { %>
+                            <option value="<%= row._id %>"><%= row.tenMH %></option>
+                        <% }); %>
+                    </select>
+                    <label class="control-label">Điểm Quiz</label>
+                    <input class="form-control" type="number" name="diemQuiz" value="<%= objDiem.diemQuiz %>">
+                    <label class="control-label">Điểm Lab</label>
+                    <input class="form-control" type="number" name="diemLab" value="<%= objDiem.diemLab %>">
+                    <label class="control-label">Điểm Assignment</label>
+                    <input class="form-control" type="number" name="diemASM" value="<%= objDiem.diemASM %>">
+                    <label class="control-label">Điểm Thi</label>
+                    <input class="form-control" type="number" name="diemThi" value="<%= objDiem.diemThi %>">
                 </div>
-                
             </div><BR> <BR> <BR>
-            <button type="submit" action="/edit" class="btn btn-primary">Lưu lại</button>
-            <a class="btn btn-cancel" data-dismiss="modal" href="/sp">Hủy bỏ</a>
+            <button type="submit" class="btn btn-primary">Lưu lại</button>
+            <a class="btn btn-cancel" data-dismiss="modal" href="/diem">Hủy bỏ</a>
         </form>
-        <BR>
 
         <!-- đít -->
         <footer class="text-center text-lg-start bg-white text-muted " style="margin-top: 220px;">

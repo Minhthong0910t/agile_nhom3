@@ -38,7 +38,7 @@
                         <!-- thanh chức năng đầu tiên -->
                         <div class="row element-button">
                             <div class="col-sm-2">
-                                <a class="btn btn-add btn-sm" href="/tl/add" title="Thêm" id="show-emp" ><i class="fas fa-plus"></i>
+                                <a class="btn btn-add btn-sm" href="/diem/add" title="Thêm" id="show-emp" ><i class="fas fa-plus"></i>
                                     Tạo mới điểm</a>
                             </div>
                             
@@ -53,9 +53,10 @@
                             <thead style="width: auto;">
                                 <tr>
                                     <th data-sort-by="id" scope="col"style="text-align: center">ID</th>
-                                    <th data-sort-by="avt" scope="col" style="text-align: center">Môn học</th>
+                                    <th data-sort-by="id" scope="col"style="text-align: center">Môn học</th>
                                     <th data-sort-by="avt" scope="col" style="text-align: center">Điểm Quiz</th>
-                                    <th data-sort-by="name" scope="col" style="text-align: center">Điểm Lab</th>
+                                    <th data-sort-by="avt" scope="col" style="text-align: center">Điểm Lab</th>
+                                    <th data-sort-by="name" scope="col" style="text-align: center">Điểm Assignment</th>
                                     <th data-sort-by="avt" scope="col" style="text-align: center">Điểm thi</th>
                                     <th data-sort-by="chucnang" scope="col" style="text-align: center">Chức năng</th>                                  
                                 </tr>
@@ -63,9 +64,12 @@
                             <tbody>
                                 <% list.forEach((row) => { %>
                                     <tr>
-                                        <tr>                                      
+                                        <tr>          
                                             <td>
                                                 <%= row._id %>
+                                            </td>                            
+                                            <td>
+                                                <%= row.id_monHoc.tenMH %>
                                             </td>
                                             <td>
                                                 <%= row.diemQuiz %>
@@ -80,14 +84,12 @@
                                                 <%= row.diemThi %>
                                             </td>   
                                             <td>
-                                                <%= row.id_monHoc.tenMH %>
-                                            </td>   
-                                            <td>
                                                 <button class="btn btn-primary" type="button" title="Xóa"
-                                                data-toggle="modal" data-target="#ModalDL"><i class="fas fa-trash-alt"></i>
-                                                </button>
-                                                <div class="modal fade" id="ModalDL" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
-                                                data-keyboard="false">
+                                                data-toggle="modal" data-target="#ModalDL<%= row._id %>"><i
+                                                    class="fas fa-trash-alt"></i>
+                                            </button>
+                                            <div class="modal fade" id="ModalDL<%= row._id %>" tabindex="-1" role="dialog"
+                                                aria-hidden="true" data-backdrop="static" data-keyboard="false">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-body">
@@ -95,27 +97,27 @@
                                                                 <div class="form-group  col-md-12">
                                                                     <span class="thong-tin-thanh-toan">
                                                                         <br>
-                                                                        <h3 style="text-align: center; color: red;">Cảnh báo bạn đang xóa dữ liệu !!!</h3>
+                                                                        <h3 style="text-align: center; color: red;">Cảnh
+                                                                            báo bạn đang xóa dữ liệu !!!</h3>
                                                                     </span>
                                                                 </div>
                                                             </div>
-                                                            <form>
-                                                               <h4 style="text-align: center;">bạn có chắc muốn xóa dự liệu này không</h4>
-                                                               <BR> <BR> <BR>
-                                                                   
-                                                                 <a class="btn btn-delete" href="/tl/delete/<%= row._id %>">Xóa</a>
-                                                                <a class="btn btn-cancel" data-dismiss="modal" href="#" style="text-align: center;">Hủy bỏ</a>
-                                                                
+                                                            <form method="post" action="/diem/delete/<%= row._id %>">
+                                                                <h4 style="text-align: center;">bạn có chắc muốn xóa dự
+                                                                    liệu này không</h4>
+                                                                <BR> <BR> <BR>
+
+                                                                    <button type="submit" class="btn btn-primary">Xóa</button>
+                                                                <a class="btn btn-cancel" data-dismiss="modal" href="#"
+                                                                    style="text-align: center;">Hủy bỏ</a>
                                                             </form> <br>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                                 <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp">
-                                                   <a href="/tl/edit/<%= row._id %>"><i class="fas fa-edit"></i></a>
+                                                   <a href="/diem/update/<%= row._id %>"><i class="fas fa-edit"></i></a>
                                                 </button>
-                                                <button class="btn btn-primary btn-sm info" type="button" title="chi tiết"
-                                                    id="show-emp"><i class="fas fa-info"></i></button>
                                             </td>
                                         </tr>
                                     </tr>

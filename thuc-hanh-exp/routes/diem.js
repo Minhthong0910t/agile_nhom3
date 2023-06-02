@@ -20,8 +20,8 @@ router.get('/update/:idsp',check_login.yeu_cau_dang_nhap, diemCtrl.update);
 router.post('/update/:idsp',check_login.yeu_cau_dang_nhap, diemCtrl.update);
 
 //delete
-router.get("/delete/:idsp",check_login.yeu_cau_dang_nhap, diemCtrl.delete);
-router.delete("/delete/:idsp",check_login.yeu_cau_dang_nhap, diemCtrl.delete);
+router.post("/delete/:idsp",check_login.yeu_cau_dang_nhap, diemCtrl.delete);
+
 
 router.get('/CTSP/:idsp',check_login.yeu_cau_dang_nhap, diemCtrl.chitiet);
 

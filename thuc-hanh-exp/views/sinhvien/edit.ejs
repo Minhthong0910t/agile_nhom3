@@ -26,55 +26,47 @@
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="#"><b>Update sản phẩm</b></a></li>
+                <li class="breadcrumb-item active"><a href="#"><b>Sửa sinh viên</b></a></li>
             </ul>
             <span><%= msg %></span>
             <div id="clock"></div>
         </div>
-
-        <form action="" method="post">
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label class="control-label">Tên sản phẩm </label>
-                    <input class="form-control" value="<%= objSP.tenSP%>" type="text" name="tenSP">
-                </div>
-                <div class="form-group col-md-6 ">
-                    <label for="exampleSelect1" class="control-label">loại sản phẩm</label>
-                    <!-- <select name="theloai" style="height: 30px;" class="col-md-6">
-                        <% listTL.forEach( row =>{   
-                            let selected = '';
-                            if(  String(row._id) == String( objSP.idTL) )
-                                selected = '  selected ';
-                            %>
-                            <option <%= selected %>  value="<%= row._id %>"><%= row.tenSP %></option>
-                        <%  } )  %>
-                
-                    </select> -->
-                    <select name="theloai" class="col-md-6" style="height: 30px;">
-                        <% listTL.forEach( row=>{ %>
-                            <option value="<%= row._id %>">
-                                <%= row.tenTL %>
-                            </option>
-                            <% } ) %>
-                    </select>
-                </div>
-                <div class="form-group  col-md-6">
-                    <label class="control-label">avt sản phẩm</label>
-                    <input class="form-control" value="<%= objSP.img%>" type="text" name="img">
-                </div>
-                <div class="form-group col-md-6 ">
-                    <label class="control-label">giá sản phẩm</label>
-                    <input class="form-control" type="number" value="<%= objSP.giatien%>" name="giatien">
-                </div>
-                <div class="form-group col-md-12">
-                    <label class="control-label">nội dung</label>
-                     <textarea class="form-control" type="text" name="noidung" cols="30" rows="10"><%= objSP.noidung%></textarea>
-                </div>
-            </div><BR> <BR> <BR>
-            <button type="submit" action="/edit" class="btn btn-primary">Lưu lại</button>
-            <a class="btn btn-cancel" data-dismiss="modal" href="/sp">Hủy bỏ</a>
-        </form>
-        <BR>
+   
+                <form action="" method="post">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Tên sinh viên </label>
+                            <input class="form-control" type="text" name="tenSV" value="<%= objStudent.tenSV%>">
+                        </div>
+                        <div class="form-group  col-md-6">
+                            <label class="control-label">Giới tính</label>
+                            <select class="form-control" id="exampleSelect1" name="gioiTinh">   
+                                <% let selected=""
+                                if(String(objStudent.gioiTinh)==String("Nam")) { %>
+                                    <option <%= selected %> value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                    <% } else if(String(objStudent.gioiTinh)==String("Nữ")){ 
+                                        selected= "selected" %>   
+                                        <option <%= selected %> value="Nữ">Nữ</option>
+                                         <option value="Nam">Nam</option>
+                                        <% } %>                   
+                                
+                                
+                            </select>
+                            
+                        </div>
+                        <div class="form-group col-md-6 ">
+                            <label class="control-label">Ngày sinh</label>
+                            <input class="form-control" type="date" name="ngaySinh" value="<%= objStudent.ngaySinh%>">
+                        </div>
+                        
+                    </div><BR> <BR> <BR>
+                    <button type="submit" action="/edit"  class="btn btn-primary">Lưu lại</button>
+                    <a class="btn btn-cancel" data-dismiss="modal" href="/sinhVien">Hủy bỏ</a>
+                </form>
+                <BR>
+           
+<!-- hết MODAL add-->
 
         <!-- đít -->
         <footer class="text-center text-lg-start bg-white text-muted " style="margin-top: 220px;">

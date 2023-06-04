@@ -36,11 +36,10 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label class="control-label">Tên môn học</label>
-                    <input class="form-control" value="<%= objMH.tenMH %>" type="text" name="tenMH">
-                    <label class="control-label">Số tín chỉ</label>
-                    <input class="form-control" value="<%= objMH.tinChi %>" type="text" name="soTinChi">
+                    <input class="form-control" type="text" name="tenMH" value="<%=objMH.tenMH %>">
+                    <label class="control-label">Số tin chỉ</label>
+                    <input class="form-control" type="number" name="soTinChi" value="<%=objMH.tinChi %>">
                 </div>
-                
             </div><BR> <BR> <BR>
             <button type="submit" class="btn btn-primary">Lưu lại</button>
             <a class="btn btn-cancel" data-dismiss="modal" href="/monHoc">Hủy bỏ</a>

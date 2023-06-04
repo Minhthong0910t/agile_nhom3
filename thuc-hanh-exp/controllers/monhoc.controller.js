@@ -26,7 +26,7 @@ exports.add = async(req, res, next) => {
 
 exports.update = async(req, res, next) => {
     let msg = '';
-    let idmh = req.params.idsp;
+    let idmh = req.params.idmh;
     let objMH = await mHModel.subjectModel.findById(idmh);
     if(req.method == 'POST'){
         let objMH = new mHModel.subjectModel();
@@ -44,14 +44,8 @@ exports.update = async(req, res, next) => {
     res.render('monHoc/edit', {req: req, msg: msg, objMH: objMH});
 }
 
-exports.delete = async(req, res, next) => {
-    let idsp = req.params.idsp;
-    let objMH = await mHModel.subjectModel.findById(idsp);
-    try {
-        await mHModel.subjectModel.findByIdAndRemove(idsp, objMH);
-        console.log("Xóa thành công");
-        res.redirect('/monHoc');
-    } catch (err) {
-        console.log('Xóa thất bại');
-    }
+exports.delete= async (req,res,next)=>{
+    await mHModel.subjectModel.deleteOne({_id: req.body.IdDelete});
+    res.redirect('/monHoc');
+
 }

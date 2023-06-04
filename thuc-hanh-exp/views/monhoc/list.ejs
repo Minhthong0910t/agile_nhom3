@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Danh sách lớp</title>
+    <title>Danh sách môn học</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,7 +26,7 @@
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="#"><b>Danh sách lớp</b></a></li>
+                <li class="breadcrumb-item active"><a href="#"><b>Danh sách môn học</b></a></li>
             </ul>
             <span><%= msg %></span>
             <div id="clock"></div>
@@ -81,41 +81,15 @@
                                         </td>
                                         
                                         <td>
-                                            <button class="btn btn-primary" type="button" title="Xóa"
-                                                data-toggle="modal" data-target="#ModalDL<%= row._id %>"><i
-                                                    class="fas fa-trash-alt"></i>
-                                            </button>
-                                            <div class="modal fade" id="ModalDL<%= row._id %>" tabindex="-1" role="dialog"
-                                                aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="form-group  col-md-12">
-                                                                    <span class="thong-tin-thanh-toan">
-                                                                        <br>
-                                                                        <h3 style="text-align: center; color: red;">Cảnh
-                                                                            báo bạn đang xóa dữ liệu !!!</h3>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <form method="post" action="/monHoc/delete/<%= row._id %>">
-                                                                <h4 style="text-align: center;">bạn có chắc muốn xóa dự
-                                                                    liệu này không</h4>
-                                                                <BR> <BR> <BR>
-
-                                                                    <button type="submit" class="btn btn-primary">Xóa</button>
-                                                                <a class="btn btn-cancel" data-dismiss="modal" href="#"
-                                                                    style="text-align: center;">Hủy bỏ</a>
-                                                            </form> <br>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <button class="btn btn-primary btn-sm edit" type="button" title="Sửa"
                                                 id="show-emp">
                                                 <a href="/monHoc/edit/<%= row._id %>"><i class="fas fa-edit"></i></a>
                                             </button>
+                                            <button class="btn bg-warning-subtle btn-sm" style="font-size: 12px;" type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteModal" data-user-id="<%= row._id %>">
+                                                <i class="fas fa-trash-alt text-danger" style="font-size: 12px;"></i>
+                                            </button>
+                                            
                                         </td>
                                     </tr>
                                     </tr>
@@ -171,6 +145,30 @@
                 </div>
             </div>
         </div>
+
+<!-- modall xoá -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xoá Môn học</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="/monhoc/delete" method="POST" id="formDelete">
+                        <input type="hidden" name="IdDelete" id="IdDelete">
+                            <div class="modal-body">
+                                Bạn có chắc muốn xoá Môn học này không?
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                            <button type="submit" class="btn btn-danger" id="confirmDeleteBtn">Xoá</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
         <!-- đít -->
         <footer class="text-center text-lg-start bg-white text-muted ">
             <!-- Copyright -->
@@ -196,6 +194,10 @@
     <!-- Data table plugin-->
     <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
+
+    <!-- data model xoa -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
         $('#sampleTable').DataTable();
@@ -241,32 +243,21 @@
         }
     </script>
     <script>
-        function deleteRow(r) {
-            var i = r.parentNode.parentNode.rowIndex;
-            document.getElementById("myTable").deleteRow(i);
-        }
-        jQuery(function () {
-            jQuery(".trash").click(function () {
-                swal({
-                    title: "Cảnh báo",
-                    text: "Bạn có chắc chắn là muốn xóa sản phẩm này?",
-                    buttons: ["Hủy bỏ", "Đồng ý"],
-                })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            swal("Đã xóa thành công.!", {
-
-                            });
-                        }
-                    });
-            });
-        });
-        oTable = $('#sampleTable').dataTable();
-        $('#all').click(function (e) {
-            $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
-            e.stopImmediatePropagation();
-        });
-    </script>
+        $('#deleteModal').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget) // Nút mở modal
+          console.log('da clickkkkkkkk'+button);
+          var userId = button.data('user-id') // Lấy giá trị của thuộc tính data-product-id
+          var deleteModal = document.querySelector("#deleteModal");
+          var formDelete = deleteModal.querySelector("#formDelete");
+          formDelete.querySelector("#IdDelete").value = userId;
+          $("#confirmDeleteBtn").click(function () {
+            // Xử lý xoá sản phẩm ở đây
+      
+            // Sau khi xoá thành công, ẩn dialog
+            $('#deleteModal').modal('hide');
+          });
+        })
+      </script>
 </body>
 
 </html>

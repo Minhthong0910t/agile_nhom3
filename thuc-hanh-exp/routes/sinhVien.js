@@ -16,8 +16,8 @@ router.get('/locID/:idtl',check_login.yeu_cau_dang_nhap,sinhVienCtrl.list)
 router.get('/add',check_login.yeu_cau_dang_nhap, sinhVienCtrl.add);
 router.post('/add',check_login.yeu_cau_dang_nhap, sinhVienCtrl.add);
 
-router.get('/edit/:idsp',check_login.yeu_cau_dang_nhap, sinhVienCtrl.edit);
-router.post('/edit/:idsp',check_login.yeu_cau_dang_nhap, sinhVienCtrl.edit);
+router.get('/edit/:idsv',check_login.yeu_cau_dang_nhap, sinhVienCtrl.edit);
+router.post('/edit/:idsv',check_login.yeu_cau_dang_nhap, sinhVienCtrl.edit);
 
 //delete
 router.post('/delete',sinhVienCtrl.delete);

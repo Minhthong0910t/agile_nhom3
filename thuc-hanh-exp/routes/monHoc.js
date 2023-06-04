@@ -16,11 +16,11 @@ router.get('/locID/:idtl',check_login.yeu_cau_dang_nhap,mHCtrl.list)
 router.get('/add',check_login.yeu_cau_dang_nhap, mHCtrl.add);
 router.post('/add',check_login.yeu_cau_dang_nhap, mHCtrl.add);
 
-router.get('/edit/:idsp',check_login.yeu_cau_dang_nhap, mHCtrl.update);
-router.post('/edit/:idsp',check_login.yeu_cau_dang_nhap, mHCtrl.update);
+router.get('/edit/:idmh',check_login.yeu_cau_dang_nhap, mHCtrl.update);
+router.post('/edit/:idmh',check_login.yeu_cau_dang_nhap, mHCtrl.update);
 
 //delete
-router.post("/delete/:idsp",check_login.yeu_cau_dang_nhap, mHCtrl.delete);
+router.post("/delete",check_login.yeu_cau_dang_nhap, mHCtrl.delete);
 
 
 module.exports = router;

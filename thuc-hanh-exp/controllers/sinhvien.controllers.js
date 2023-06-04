@@ -28,16 +28,16 @@ exports.add = async(req, res, next) => {
 
 exports.edit = async(req, res, next) => {
     let msg = '';
-    let idmh = req.params.idsp;
-    let objStudent = await myModel.studentModel.findById(idmh);
+    let idsv = req.params.idsv;
+    let objStudent = await myModel.studentModel.findById(idsv);
     if(req.method == 'POST'){
         let objStudent = new myModel.studentModel();
         objStudent.tenSV = req.body.tenSV;
         objStudent.gioiTinh = req.body.gioiTinh;
         objStudent.ngaySinh = req.body.ngaySinh;
-        objStudent._id = idmh;
+        objStudent._id = idsv;
         try{
-            await myModel.studentModel.findByIdAndUpdate(idmh, objStudent);
+            await myModel.studentModel.findByIdAndUpdate(idsv, objStudent);
             msg = 'Sửa thành công';
         } catch (err){
             msg = 'Sửa thất bại'
@@ -49,5 +49,6 @@ exports.edit = async(req, res, next) => {
 
 exports.delete= async (req,res,next)=>{
     await myModel.studentModel.deleteOne({_id: req.body.IdDelete});
-    res.redirect('/sinhvien');
+    res.redirect('/sinhVien');
+
 }

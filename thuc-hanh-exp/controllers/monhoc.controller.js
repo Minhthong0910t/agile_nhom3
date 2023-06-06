@@ -2,7 +2,11 @@ var mHModel = require('../models/agile.models');
 
 exports.list = async(req, res, next) => {
     let msg = '';
-    let list = await mHModel.subjectModel.find().sort({tenMH: 1});
+    let timKiem = null;
+    if (req.query.tenMH != '' && String(req.query.tenMH) != 'undefined') {
+        timKiem = { tenMH: req.query.tenMH }
+    }
+    let list = await mHModel.subjectModel.find(timKiem).sort({tenMH: 1});
     res.render('monHoc/list', {req: req, msg: msg, list: list});
 }
 

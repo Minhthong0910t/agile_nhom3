@@ -2,7 +2,11 @@ var myModel = require('../models/agile.models');
 
 exports.list = async(req, res, next) => {
     let msg = '';
-    let list = await myModel.studentModel.find();
+    let timKiem = null;
+    if (req.query.tenSV != '' && String(req.query.tenSV) != 'undefined') {
+        timKiem = { tenSV: req.query.tenSV }
+    }
+    let list = await myModel.studentModel.find(timKiem);
     res.render('sinhvien/list', {req: req, msg: msg, list: list});
 }
 

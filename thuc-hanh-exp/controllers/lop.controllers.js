@@ -3,7 +3,11 @@ var msg = "";
 
 exports.list = async (req, res, next) => {
     var msg = "";
-    let list = await myMD.classModel.find();
+    let timKiem = null;
+    if (req.query.tenLop != '' && String(req.query.tenLop) != 'undefined') {
+        timKiem = { tenLop: req.query.tenLop }
+    }
+    let list = await myMD.classModel.find(timKiem);
     res.render('lop/list', { listClass: list, req: req , msg: msg});
 }
 

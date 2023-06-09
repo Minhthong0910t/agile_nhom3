@@ -20,9 +20,13 @@ exports.add = async (req, res, next) => {
         // tạo đối tượng model để gán dữ liệu
         let objClass = new myMD.classModel();
         objClass.tenLop = req.body.tenLop;
+        let objStdList = new diemModel.studentListModel();
+        objStdList.id_diem = objDiem._id;
 
         try {
             let new_Class = await objClass.save();
+            objStdList = await objStdList.save();
+            
             console.log(new_Class);
             msg = "Đã thêm thành công";
         } catch (error) {

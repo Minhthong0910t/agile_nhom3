@@ -5,6 +5,22 @@ exports.list = async(req, res, next) => {
     res.render('diem/list', {list: listDiem, req: req});
 }
 
+const addMarkToStudent = async (id_sv, id_diem) => {
+    try {
+      const updatedStudent = await diemModel.studentListModel.findOneAndUpdate(
+        { id_sv: id_sv },
+        { $push: { id_diem: id_diem } },
+        {new: true} 
+      );
+  
+      return updatedStudent;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
+
 exports.add = async(req, res, next) => {
     let msg = '';
     let listMH = await diemModel.subjectModel.find().sort({tenMH: 1});
@@ -15,9 +31,15 @@ exports.add = async(req, res, next) => {
         objDiem.diemASM = req.body.diemASM;
         objDiem.diemThi = req.body.diemThi;
         objDiem.id_monHoc = req.body.tenMH;
+
+        let objStdList = new diemModel.studentListModel();
+        objStdList.id_diem = objDiem._id;
+
         try{
-            let o = await objDiem.save();
-            console.log(o);
+            await objDiem.save();
+            await addMarkToStudent(id_sv, objDiem);
+            objStdList = await objStdList.save();
+            
             msg = 'Thêm thành công';
         } catch (err){
             msg = 'Thêm thất bại'

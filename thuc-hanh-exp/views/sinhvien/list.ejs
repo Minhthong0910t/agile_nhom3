@@ -76,30 +76,34 @@
                         <table class="table table-bordered col">
                             <thead style="width: auto;">
                                 <tr>
-                                    <th scope="col" style="text-align: center">Tên sinh viên</th>
-                                    <th scope="col" style="text-align: center">Giới tính</th>
-                                    <th scope="col" style="text-align: center">Ngày sinh</th>
-                                    <th scope="col" style="text-align: center">Chức năng</th>
+                                    <th scope="col" style=" width: 5%;">MSSV</th>
+                                    <th scope="col" style=" width: 10%;">Tên sinh viên</th>
+                                    <th scope="col" style="width: 5%;">Giới tính</th>
+                                    <th scope="col" style=" width: 5%;">Ngày sinh</th>
+                                    <th scope="col" style=" width: 10%;">Chức năng</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <% list.forEach((row)=> { %>
                                     <tr>
                                         <td>
-                                            <%= row.tenSV %>
+                                            <%= row.id_sv._id %>
                                         </td>
                                         <td>
-                                            <%= row.gioiTinh %>
+                                            <%= row.id_sv.tenSV %>
                                         </td>
                                         <td>
-                                            <%= row.ngaySinh %>
+                                            <%= row.id_sv.gioiTinh %>
+                                        </td>
+                                        <td>
+                                            <%= row.id_sv.ngaySinh %>
                                         </td>
 
                                         <td>
-                                             
+
                                             <button class="btn btn-primary btn-sm edit" type="button" title="Sửa"
                                                 id="show-emp">
-                                                <a href="/sinhVien/edit/<%= row._id %>"><i class="fas fa-edit"></i></a>
+                                                <a href="/sinhVien/edit/<%= row.id_sv._id %>"><i class="fas fa-edit"></i></a>
                                             </button>
                                             <button class="btn bg-warning-subtle btn-sm" style="font-size: 12px;" type="button" data-bs-toggle="modal"
                                                     data-bs-target="#deleteModal" data-user-id="<%= row._id %>">

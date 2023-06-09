@@ -2,6 +2,7 @@ var db = require('./db');
 
 const studentSchema = new db.mongoose.Schema(
     {
+        _id: {type: String, require: true},
         tenSV: {type: String, require: true},
         gioiTinh: {type: String, require: true},
         ngaySinh: {type: String, require: true}
@@ -38,10 +39,26 @@ let subjectModel = db.mongoose.model('subjectModel', subjectSchema);
 const studentListSchema = new db.mongoose.Schema(
     {
         id_lop: {type: db.mongoose.Schema.Types.ObjectId, ref: 'subjectModel'},
-        id_sv: {type: db.mongoose.Schema.Types.ObjectId, ref: 'studentModel'},
+        id_sv: {type: String, ref: 'studentModel'},
         id_diem: {type: db.mongoose.Schema.Types.ObjectId, ref: 'markModel'}
     }, {collection: 'dsSinhVien'}
 );
+studentListSchema.pre("remove", async function (next) {
+    try {
+      // Tìm object của sinh viên trong bảng studentModel
+      const student = await studentModel.findById(this.id_sv);
+      if (!student) return next();
+  
+      // Xóa object của sinh viên trong bảng studentModel và các object liên quan trong bảng markModel
+      await markModel.deleteOne({ _id: this.id_diem });
+      await student.remove();
+  
+      return next();
+    } catch (error) {
+      return next(error);
+    }
+  });
+  
 let studentListModel = db.mongoose.model('studentListModel', studentListSchema);
 
 module.exports = {studentListModel, studentModel, classModel, markModel, subjectModel}

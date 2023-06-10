@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Danh sách lớp</title>
+    <title>Danh sách sinh viên</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,9 +26,9 @@
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="#"><b>Danh sách lớp</b></a></li>
+                <li class="breadcrumb-item active"><a href="#"><b><%= objClass.tenLop %></b></a></li>
             </ul>
-            <span><%= msg %></span>
+            <div><%= msg %></div>
             <div id="clock"></div>
         </div>
         <div class="row">
@@ -38,11 +38,15 @@
                         <!-- thanh chức năng đầu tiên -->
                         <div class="row element-button">
                             <div class="col-sm-2">
-                                <a class="btn btn-add btn-sm" href="/lop/add" title="Thêm" id="show-emp"><i
-                                        class="fas fa-plus"></i>
-                                    Tạo lớp mới</a>
+                                <a class="btn btn-add btn-sm" href="/lop/listSV/<%= objClass._id %>/addSV" title="Thêm" id="show-emp"><i
+                                    class="fas fa-plus"></i>Thêm sinh viên</a>
+                               
                             </div>
-                            
+                            <div class="col-sm-2">
+                                <a class="btn btn-add btn-sm" href="/diem" title="Thêm" id="show-emp"><i
+                                        class="fas fa-list"></i>
+                                    Xem danh sách điểm</a>
+                            </div>
                         </div>
 
 
@@ -51,8 +55,7 @@
                            
                             <!-- thanh tìm kiếm -->
                             <form role="search" style=" margin-top: 20px; margin-bottom: 30px; display: flex; float: right;">
-                                
-                            <input class="form-control col-6 col-sm-6 col-md-9" type="search" placeholder="Tìm mã lớp..." aria-label="Search" name="tenLop">
+                            <input class="form-control col-6 col-sm-6 col-md-9" type="search" placeholder="Tìm tên sinh viên..." aria-label="Search" name="tenSV">
                             <button class="btn btn-outline-info"  style="margin: 0px;" type="submit"><i style="height: 20px; padding-top: 6px; " class=' bx bx-search-alt-2'></i></button>
                             </form>
                         </div>
@@ -60,36 +63,40 @@
                         <table class="table table-bordered col">
                             <thead style="width: auto;">
                                 <tr>
-                                    <th scope="col" style="text-align: center">ID</th>
-                                    <th scope="col" style="text-align: center">Tên lớp</th>
+                                    <th scope="col" style=" width: 5%;">MSSV</th>
+                                    <th scope="col" style=" width: 10%;">Tên sinh viên</th>
+                                    <th scope="col" style="width: 5%;">Giới tính</th>
+                                    <th scope="col" style=" width: 5%;">Ngày sinh</th>
+                                    <th scope="col" style=" width: 10%;">Chức năng</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% listClass.forEach((row)=> { %>
+                                <% list.forEach((row)=> { %>
                                     <tr>
                                         <td>
-                                            <%= row._id %>
+                                            <%= row.id_sv._id %>
                                         </td>
-                                        
                                         <td>
-                                            <%= row.tenLop %>
+                                            <%= row.id_sv.tenSV %>
                                         </td>
-                                        
                                         <td>
-                                            
+                                            <%= row.id_sv.gioiTinh %>
+                                        </td>
+                                        <td>
+                                            <%= row.id_sv.ngaySinh %>
+                                        </td>
+
+                                        <td>
+
+                                            <button class="btn btn-primary btn-sm edit" type="button" title="Sửa"
+                                                id="show-emp">
+                                                <a href="/sinhVien/edit/<%= row.id_sv._id %>"><i class="fas fa-edit"></i></a>
+                                            </button>
                                             <button class="btn bg-warning-subtle btn-sm" style="font-size: 12px;" type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteModal" data-lop-id="<%= row._id %>">
+                                                    data-bs-target="#deleteModal" data-user-id="<%= row._id %>">
                                                 <i class="fas fa-trash-alt text-danger" style="font-size: 12px;"></i>
                                             </button>
-                                            <button class="btn btn-primary btn-sm edit" type="button" title="Sửa"
-                                                id="show-emp">
-                                                <a href="/lop/edit/<%= row._id %>"><i class="fas fa-edit"></i></a>
-                                            </button>
                                             
-                                            <button class="btn btn-primary btn-sm edit" type="button" title="Sửa"
-                                                id="show-emp">
-                                                <a href="/lop/listSV/<%= row._id %>">Xem lớp</a>
-                                            </button>
                                         </td>
                                     </tr>
                                     </tr>
@@ -144,19 +151,20 @@
                     </div>
                 </div>
             </div>
-            <!-- modal delete -->
-    <!-- form xoá -->
+
+
+   <!-- form xoá -->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xoá lớp</h5>
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xoá Sinh viên</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="/lop/delete" method="POST" id="formDelete">
+                <form action="/lop/listSV/<%= objClass._id %>/deleteSV" method="POST" id="formDelete">
                     <input type="hidden" name="IdDelete" id="IdDelete">
                         <div class="modal-body">
-                            Bạn có chắc muốn xoá lớp này không?
+                            Bạn có chắc muốn xoá Sinh viên này không?
                         </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -166,7 +174,7 @@
             </div>
         </div>
     </div>
-        </div>
+</div>
         <!-- đít -->
         <footer class="text-center text-lg-start bg-white text-muted ">
             <!-- Copyright -->
@@ -195,6 +203,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
 
     <script type="text/javascript">
         $('#sampleTable').DataTable();
@@ -240,49 +249,21 @@
         }
     </script>
     <script>
-        function deleteRow(r) {
-            var i = r.parentNode.parentNode.rowIndex;
-            document.getElementById("myTable").deleteRow(i);
-        }
-        jQuery(function () {
-            jQuery(".trash").click(function () {
-                swal({
-                    title: "Cảnh báo",
-                    text: "Bạn có chắc chắn là muốn xóa sản phẩm này?",
-                    buttons: ["Hủy bỏ", "Đồng ý"],
-                })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            swal("Đã xóa thành công.!", {
-
-                            });
-                        }
-                    });
-            });
-        });
-        oTable = $('#sampleTable').dataTable();
-        $('#all').click(function (e) {
-            $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
-            e.stopImmediatePropagation();
-        });
-    </script>
-
-<script>
-    $('#deleteModal').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget) // Nút mở modal
-      console.log('da clickkkkkkkk'+button);
-      var userId = button.data('lop-id') // Lấy giá trị của thuộc tính data-product-id
-      var deleteModal = document.querySelector("#deleteModal");
-      var formDelete = deleteModal.querySelector("#formDelete");
-      formDelete.querySelector("#IdDelete").value = userId;
-      $("#confirmDeleteBtn").click(function () {
-        // Xử lý xoá sản phẩm ở đây
-  
-        // Sau khi xoá thành công, ẩn dialog
-        $('#deleteModal').modal('hide');
-      });
-    })
-  </script>
+        $('#deleteModal').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget) // Nút mở modal
+          console.log('da clickkkkkkkk'+button);
+          var userId = button.data('user-id') // Lấy giá trị của thuộc tính data-product-id
+          var deleteModal = document.querySelector("#deleteModal");
+          var formDelete = deleteModal.querySelector("#formDelete");
+          formDelete.querySelector("#IdDelete").value = userId;
+          $("#confirmDeleteBtn").click(function () {
+            // Xử lý xoá sản phẩm ở đây
+      
+            // Sau khi xoá thành công, ẩn dialog
+            $('#deleteModal').modal('hide');
+          });
+        })
+      </script>
 </body>
 
 </html>

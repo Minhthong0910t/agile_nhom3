@@ -69,6 +69,9 @@ app.use(function(err, req, res, next) {
  }
  // thử truy cập địa chỉ web:   http://localhost:3000/api và http://localhost:3000/xyz 
  
+ process.on('uncaughtException', function (err) {
+  console.log(err);
+});
 
   res.render('error');
 });

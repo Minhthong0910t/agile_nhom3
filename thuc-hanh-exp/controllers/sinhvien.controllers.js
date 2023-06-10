@@ -25,7 +25,8 @@ exports.add = async(req, res, next) => {
         
             while (true) {
               // Tạo MSSV ngẫu nhiên
-              MSSV = 'PH' + Math.floor(Math.random() * 100000);
+              const randomNumber = Math.floor(Math.random() * 100000);
+                MSSV = 'PH' + String(randomNumber).padStart(5, '0');
         
          // Kiểm tra xem MSSV mới tạo có bị trùng lặp không
               const existingMSSV = existingStudents.some(student => student._id === MSSV);
@@ -38,8 +39,8 @@ exports.add = async(req, res, next) => {
             objStdList.id_sv = newStudent._id;
 
             // Lưu tài khoản mới vào cơ sở dữ liệu
-            await objStdList.save();
             await newStudent.save();
+            await objStdList.save();
             msg = 'Thêm thành công';
           } catch (error) {
             msg = 'Thêm thất bại'
@@ -86,6 +87,6 @@ exports.delete= async (req,res,next)=>{
     
     // Xóa document sinh viên trong collection "studentListModel"
     await myModel.studentListModel.deleteOne({_id: req.body.IdDelete});
-
+    
     res.redirect('/sinhVien');  
 }

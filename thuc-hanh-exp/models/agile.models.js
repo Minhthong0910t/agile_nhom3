@@ -2,7 +2,7 @@ var db = require('./db');
 
 const studentSchema = new db.mongoose.Schema(
     {
-        _id: {type: String, require: true},
+        MSSV : {type: String, require: true},
         tenSV: {type: String, require: true},
         gioiTinh: {type: String, require: true},
         ngaySinh: {type: String, require: true}
@@ -19,6 +19,8 @@ let classModel = db.mongoose.model('classModel', classSchema);
 
 const markSchema = new db.mongoose.Schema(
     {
+        id_lop: {type: db.mongoose.Schema.Types.ObjectId, ref: 'classModel'},
+        id_sv: {type: db.mongoose.Schema.Types.ObjectId, ref: 'studentModel'},
         diemQuiz: {type: Number, require: true},
         diemLab: {type: Number, require: true},
         diemASM: {type: Number, require: true},
@@ -38,9 +40,9 @@ let subjectModel = db.mongoose.model('subjectModel', subjectSchema);
 
 const studentListSchema = new db.mongoose.Schema(
     {
-        id_lop: {type: db.mongoose.Schema.Types.ObjectId, ref: 'subjectModel'},
-        id_sv: {type: String, ref: 'studentModel'},
-        id_diem: {type: db.mongoose.Schema.Types.ObjectId, ref: 'markModel'}
+        id_lop: {type: db.mongoose.Schema.Types.ObjectId, ref: 'classModel'},
+        id_sv: {type: db.mongoose.Schema.Types.ObjectId, ref: 'studentModel'},
+        id_diem: {type: db.mongoose.Schema.Types.ObjectId, ref: 'markModel'},
     }, {collection: 'dsSinhVien'}
 );
 studentListSchema.pre("remove", async function (next) {

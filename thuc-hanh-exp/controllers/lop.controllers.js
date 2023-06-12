@@ -3,7 +3,7 @@ var myMD = require('../models/agile.models');
 var msg = "";
 
 exports.list = async (req, res, next) => {
-    var msg = "";
+    msg = "";
     let timKiem = null;
     if (req.query.tenLop != '' && String(req.query.tenLop) != 'undefined') {
         timKiem = { tenLop: req.query.tenLop }
@@ -13,17 +13,21 @@ exports.list = async (req, res, next) => {
 }
 
 exports.listSV = async (req, res, next) => {
-    var msg = "";
+    msg = "";
     let id = req.params.id;
 
+    let timKiem = null;
+    if (req.query.MSSV != '' && String(req.query.MSSV) != 'undefined') {
+        timKiem = { id_sv : req.query.MSSV }
+    }
+
     const objClass = await myMD.classModel.findById(id);
-    let list = await myMD.studentListModel.find({id_lop : id}).populate('id_sv').populate('id_diem').populate('id_lop');
+    let list = await myMD.studentListModel.find({id_lop : id, timKiem}).populate('id_sv').populate('id_diem').populate('id_lop');
     res.render('lop/listSV', { list : list, req: req , msg: msg, objClass: objClass});
 }
 
 
 exports.add = async (req, res, next) => {
-    msg = '';
     if (req.method == "POST") {
         try {
             let objClassCheck = await myMD.classModel.findOne({ tenLop: req.body.tenLop });
@@ -51,41 +55,50 @@ exports.addSV = async (req, res, next) => {
     // lấy ds thể loại truyền ra view 
     let id = req.params.id;
     const objClass = await myMD.classModel.findById(id);
-    let list = await myMD.studentListModel.find({id_lop : id}).populate('id_sv').populate('id_diem').populate('id_lop');
+    let list = await myMD.studentListModel.find().populate('id_sv').populate('id_diem').populate('id_lop');
+
     if (objClass) {
-        const classInfo = objClass;
+
         if (req.method == "POST") {
             try {
-                // Lấy danh sách tất cả các MSSV đã tồn tại
-                const existingStudents = await myMD.studentModel.find().select('_id');
-                let MSSV;
-                while (true) {
-                    // Tạo MSSV ngẫu nhiên
-                    const randomNumber = Math.floor(Math.random() * 100000);
-                    MSSV = 'PH' + String(randomNumber).padStart(5, '0');
-                    // Kiểm tra xem MSSV mới tạo có bị trùng lặp không
-                    const existingMSSV = existingStudents.some(student => student._id === MSSV);
-                    if (!existingMSSV) break; // Nếu không trùng lặp, thoát vòng lặp
+
+                const sv = JSON.parse(req.body.sinhVien);
+                const id_sv = sv._id;
+
+                console.log(id_sv, "ID SINH VIEN");
+                const exitstudentList = await myMD.studentListModel.findOne({id_sv: id_sv}).populate('id_sv').populate('id_diem').populate('id_lop');
+                            
+                if(Array.isArray(exitstudentList.id_lop)){
+                    
+                    const lopDaCo = exitstudentList.id_lop.find(lop => lop.toString() === id);
+                    if (lopDaCo) { // Nếu sinh viên đã tồn tại trong lớp
+                        msg = `Sinh viên ${sv.tenSV} đã có trong lớp này.`;
+                      } else {
+                        exitstudentList.id_lop.push(id); // Thêm id mới vào mảng id_lop
+                        await exitstudentList.save();
+                        msg = 'Thêm thành công';
+                        return res.render('lop/addSV', { msg: msg, req: req, objClass: objClass, list: list});
+                      }
+
+                    return res.render('lop/addSV', { msg: msg, req: req, objClass: objClass, list: list});
+                }else {
+                    const studentList = await myMD.studentListModel.findOne({id_sv: id_sv, id_lop : id}).populate('id_sv').populate('id_diem').populate('id_lop');
+                    if(studentList){
+                        msg = `Sinh viên ${sv.tenSV} đã có trong lớp này.`;
+                        return res.render('lop/addSV', { msg: msg, req: req, objClass: objClass, list: list});
+                    }else{
+                        
+                        const studentList = new myMD.studentListModel({
+                            id_lop : objClass._id
+                        });
+                        
+                        await myMD.studentListModel.findByIdAndUpdate(studentList._id, studentList);
+                        msg = 'Thêm Thành Công.'
+                    }
                 }
-                // Gán giá trị MSSV vào _id
-                const student = new myMD.studentModel(
-                    { 
-                        _id: MSSV,
-                        tenSV : req.body.tenSV,
-                        gioiTinh : req.body.gioiTinh,
-                        ngaySinh : req.body.ngaySinh
-                    });  
-                await student.save();
-                console.log(student);
-                const studentList = new myMD.studentListModel({
-                    id_lop: objClass._id,
-                    id_sv: student._id,
-                });
-                    // // Thêm thông tin sinh viên vào danh sách sinh viên
-                    await studentList.save();
-                    await classInfo.save();
-                    msg = "Đã thêm thành công";
-                    res.redirect(req.originalUrl);  // Load lại trang hiện tại
+                 
+                
+                
             } catch (error) {
                 msg = "Lỗi ghi CSDL" + error.message;
                 console.log(error);
@@ -127,30 +140,26 @@ exports.delete= async (req,res,next)=>{
 exports.deleteSV= async (req,res,next)=>{
     let id = req.params.id;
     try {
-            const studentList = await myMD.studentListModel.findById(req.body.IdDelete);
+        const studentList = await myMD.studentListModel.findById(req.body.IdDelete);
         if (!studentList) {
             return res.status(404).json({ success: false, message: 'Không tìm thấy document' });
         }
-
-        // Xóa document sinh viên trong collection "studentModel   
-        await myMD.studentModel.deleteOne({_id: studentList.id_sv});
-
-        // Xóa document liên quan trong collection "markModel"
-        await myMD.markModel.deleteOne({_id: studentList.id_diem});
+        studentList.id_lop = null ;
         
-        // Xóa document sinh viên trong collection "studentListModel"
-        await myMD.studentListModel.deleteOne({_id: req.body.IdDelete});
+
+        await myMD.studentListModel.findByIdAndUpdate(studentList._id, studentList);
+        // Xóa document liên quan trong collection "markModel"
+        await myMD.markModel.deleteMany({id_sv : studentList.id_sv, id_lop : id });
 
         msg = "Xóa Thành Công!"
     } catch (error) {
         msg = 'Lỗi' + error;
     }
     res.setHeader('Cache-Control', 'no-cache'); // Thêm header bắt buộc trình duyệt bỏ qua cache
-
-
     res.redirect(`/lop/listSV/${id}`);  // Load lại trang hiện tại
-
 }
+
+
 
 
 

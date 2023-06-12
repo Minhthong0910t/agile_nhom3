@@ -13,17 +13,19 @@ router.use( (req, res, next) => {
 router.get('/',check_login.yeu_cau_dang_nhap, diemCtrl.list);
 router.get('/locID/:idtl',check_login.yeu_cau_dang_nhap, diemCtrl.list)
 
-router.get('/add',check_login.yeu_cau_dang_nhap, diemCtrl.add);
-router.post('/add',check_login.yeu_cau_dang_nhap, diemCtrl.add);
+router.get('/:idlop/listMH',check_login.yeu_cau_dang_nhap, diemCtrl.monHoc)
+router.get('/:idlop/listMH/:idMH',check_login.yeu_cau_dang_nhap, diemCtrl.listDiem)
 
-router.get('/update/:idsp',check_login.yeu_cau_dang_nhap, diemCtrl.update);
-router.post('/update/:idsp',check_login.yeu_cau_dang_nhap, diemCtrl.update);
+router.get('/:idlop/:idMH/add',check_login.yeu_cau_dang_nhap, diemCtrl.add);
+router.post('/:idlop/:idMH/add',check_login.yeu_cau_dang_nhap, diemCtrl.add);
+
+
+
+router.get('/:idlop/:idMH/update/:id',check_login.yeu_cau_dang_nhap, diemCtrl.update);
+router.post('/:idlop/:idMH/update/:id',check_login.yeu_cau_dang_nhap, diemCtrl.update);
 
 //delete
-router.post("/delete/:idsp",check_login.yeu_cau_dang_nhap, diemCtrl.delete);
-
-
-router.get('/CTSP/:idsp',check_login.yeu_cau_dang_nhap, diemCtrl.chitiet);
+router.post("/:idlop/:idMH/delete/:id",check_login.yeu_cau_dang_nhap, diemCtrl.delete);
 
 
 module.exports = router;

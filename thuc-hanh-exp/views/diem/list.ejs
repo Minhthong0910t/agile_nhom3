@@ -26,7 +26,13 @@
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="#"><b>Quản lý điểm</b></a></li>
+                <li class="breadcrumb-item active">
+                    <a href="/lop">Danh sách lớp </a>> 
+                    <a href="/lop/listSV/<%= objClass._id %>"><%= objClass.tenLop %></a> > 
+                    <a href="/diem/<%= objClass._id %>/listMH">Danh sách điểm</a> > 
+                    <a href="/diem/<%= objClass._id %>/listMH/<%= objSubject._id %>"><b><%= objSubject.tenMH  %></b></a>
+
+                </li>
             </ul>
 
             <div id="clock"></div>
@@ -38,7 +44,7 @@
                         <!-- thanh chức năng đầu tiên -->
                         <div class="row element-button">
                             <div class="col-sm-2">
-                                <a class="btn btn-add btn-sm" href="/diem/add" title="Thêm" id="show-emp" ><i class="fas fa-plus"></i>
+                                <a class="btn btn-add btn-sm" href="/diem/<%= objClass._id %>/<%= objSubject._id %>/add" title="Thêm" id="show-emp" ><i class="fas fa-plus"></i>
                                     Tạo mới điểm</a>
                             </div>
                             
@@ -52,77 +58,76 @@
                         <table class="table table-bordered col" id="myTable">
                             <thead style="width: auto;">
                                 <tr>
-                                    <th data-sort-by="id" scope="col"style="text-align: center">ID</th>
-                                    <th data-sort-by="id" scope="col"style="text-align: center">Môn học</th>
-                                    <th data-sort-by="avt" scope="col" style="text-align: center">Điểm Quiz</th>
-                                    <th data-sort-by="avt" scope="col" style="text-align: center">Điểm Lab</th>
-                                    <th data-sort-by="name" scope="col" style="text-align: center">Điểm Assignment</th>
-                                    <th data-sort-by="avt" scope="col" style="text-align: center">Điểm thi</th>
-                                    <th data-sort-by="chucnang" scope="col" style="text-align: center">Chức năng</th>                                  
+                                    <th data-sort-by="id" scope="col"style="width: 10%;">MSSV</th>
+                                    <th data-sort-by="id" scope="col"style="width: 10%;">Tên sinh viên</th>
+                                    <th data-sort-by="avt" scope="col" style="width: 10%;">Điểm Quiz</th>
+                                    <th data-sort-by="avt" scope="col" style="width: 10%;">Điểm Lab</th>
+                                    <th data-sort-by="name" scope="col" style="width: 10%;">Điểm Assignment</th>
+                                    <th data-sort-by="avt" scope="col" style="width: 10%;">Điểm thi</th>
+                                    <th data-sort-by="chucnang" scope="col" style="width: 10%;">Chức năng</th>                                  
                                 </tr>
                             </thead>
                             <tbody>
-                                <% list.forEach((row) => { %>
-                                    <tr>
+                                <% if (list && list.length > 0) { %>
+                                <% list.forEach(row => { %>
                                         <tr>          
                                             <td>
-                                                <%= row._id %>
+                                                <%= row.id_sv.MSSV %>
                                             </td>                            
                                             <td>
-                                                <%= row.id_monHoc.tenMH %>
+                                                <%= row.id_sv.tenSV %>
                                             </td>
                                             <td>
                                                 <%= row.diemQuiz %>
                                             </td>
                                             <td>
                                                 <%= row.diemLab %>
-                                            </td>   
+                                            </td>
                                             <td>
                                                 <%= row.diemASM %>
-                                            </td>   
+                                            </td>
                                             <td>
                                                 <%= row.diemThi %>
-                                            </td>   
+                                            </td>                 
                                             <td>
                                                 <button class="btn btn-primary" type="button" title="Xóa"
-                                                data-toggle="modal" data-target="#ModalDL<%= row._id %>"><i
+                                                data-toggle="modal" data-target="#ModalDL"><i
                                                     class="fas fa-trash-alt"></i>
-                                            </button>
-                                            <div class="modal fade" id="ModalDL<%= row._id %>" tabindex="-1" role="dialog"
-                                                aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="form-group  col-md-12">
-                                                                    <span class="thong-tin-thanh-toan">
-                                                                        <br>
-                                                                        <h3 style="text-align: center; color: red;">Cảnh
-                                                                            báo bạn đang xóa dữ liệu !!!</h3>
-                                                                    </span>
+                                                </button>
+                                                    <div class="modal fade" id="ModalDL" tabindex="-1" role="dialog"
+                                                        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="form-group  col-md-12">
+                                                                            <span class="thong-tin-thanh-toan">
+                                                                                <br>
+                                                                                <h3 style="text-align: center; color: red;">Cảnh
+                                                                                    báo bạn đang xóa dữ liệu !!!</h3>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <form method="post" action="/diem/<%= objClass._id %>/<%= objSubject._id %>/delete/<%= row._id %>">
+                                                                        <h4 style="text-align: center;">Bạn có chắc muốn xóa dự
+                                                                            liệu này không</h4>
+                                                                        <BR> <BR> <BR>
+
+                                                                            <button type="submit" class="btn btn-primary">Xóa</button>
+                                                                        <a class="btn btn-cancel" data-dismiss="modal" href="#"
+                                                                            style="text-align: center;">Hủy bỏ</a>
+                                                                    </form> <br>
                                                                 </div>
                                                             </div>
-                                                            <form method="post" action="/diem/delete/<%= row._id %>">
-                                                                <h4 style="text-align: center;">bạn có chắc muốn xóa dự
-                                                                    liệu này không</h4>
-                                                                <BR> <BR> <BR>
-
-                                                                    <button type="submit" class="btn btn-primary">Xóa</button>
-                                                                <a class="btn btn-cancel" data-dismiss="modal" href="#"
-                                                                    style="text-align: center;">Hủy bỏ</a>
-                                                            </form> <br>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
                                                 <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp">
-                                                   <a href="/diem/update/<%= row._id %>"><i class="fas fa-edit"></i></a>
+                                                   <a href="/diem/<%= objClass._id %>/<%= objSubject._id %>/update/<%= row._id %>"><i class="fas fa-edit"></i></a>
                                                 </button>
                                             </td>
                                         </tr>
-                                    </tr>
-                               <% }); %>
-
+                                  <%  }); %>
+                                  <% } %>
                                
                             </tbody>
                         </table>

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Danh sách sinh viên</title>
+    <title>Xem môn học</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,13 +18,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-    <script>
-        function layIdTheLoai() {
-            idTl = document.getElementById("locTheLoai").value;
-            window.location = '/sp/locID/' + idTl;
-            console.log('id : ' + idTl);
-        }
-    </script>
 
 </head>
 
@@ -33,29 +26,21 @@
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="#"><b>Danh sách sinh viên</b></a></li>
-            </ul>
+                <li class="breadcrumb-item active">
+                    <a href="/lop">Danh sách lớp </a>> 
+                    <a href="/lop/listSV/<%= objClass._id %>"><%= objClass.tenLop %></a> > 
+                    <a href="/diem/<%= objClass._id %>/listMH"><b>Danh sách điểm</b></a>
 
+                </li>
+            </ul>
+            <span><%= msg %></span>
             <div id="clock"></div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
                     <div class="tile-body">
-                        <!-- thanh chức năng đầu tiên -->
-                        <div class="row element-button">
-                            <div class="col-sm-2">
-                                <a class="btn btn-add btn-sm" href="/sinhVien/add" title="Thêm" id="show-emp"><i
-                                        class="fas fa-plus"></i>
-                                    Thêm sinh viên</a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a class="btn btn-add btn-sm" href="/monHoc" title="Thêm" id="show-emp"><i
-                                        class="fas fa-list"></i>
-                                    Xem danh sách môn học</a>
-                            </div>
-                            
-                        </div>
+                       
 
 
                         <!-- thanh tim kiem vs loc -->
@@ -63,7 +48,7 @@
                            
                             <!-- thanh tìm kiếm -->
                             <form role="search" style=" margin-top: 20px; margin-bottom: 30px; display: flex; float: right;">
-                            <input class="form-control col-6 col-sm-6 col-md-9" type="search" placeholder="Tìm mã sinh viên..." aria-label="Search" name="MSSV">
+                            <input class="form-control col-6 col-sm-6 col-md-9" type="search" placeholder="Tìm mã môn..." aria-label="Search" name="tenMH">
                             <button class="btn btn-outline-info"  style="margin: 0px;" type="submit"><i style="height: 20px; padding-top: 6px; " class=' bx bx-search-alt-2'></i></button>
                             </form>
                         </div>
@@ -71,49 +56,26 @@
                         <table class="table table-bordered col">
                             <thead style="width: auto;">
                                 <tr>
-                                    <th scope="col" style=" width: 5%;">MSSV</th>
-                                    <th scope="col" style=" width: 10%;">Tên sinh viên</th>
-                                    <th scope="col" style="width: 5%;">Giới tính</th>
-                                    <th scope="col" style=" width: 5%;">Ngày sinh</th>
-                                    <th scope="col" style=" width: 10%;">Chức năng</th>
+                                    <th scope="col" style="width: 30%;">ID</th>
+                                    <th scope="col" style="width: 50%;">Tên môn học</th>
+                                    <th scope="col" style="width: 20%;">Số tín chỉ</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <% list.forEach((row)=> { %>
                                     <tr>
                                         <td>
-                                            <%= row.id_sv.MSSV %>
+                                            <%= row._id %>
                                         </td>
+                                        <td style="font-weight: bold;">
+                                            <a href="/diem/<%= objClass._id %>/listMH/<%= row._id %>"><%= row.tenMH %></a>
+                                        </td>
+                                        
                                         <td>
-                                            <%= row.id_sv.tenSV %>
+                                            <%= row.tinChi %>
                                         </td>
-                                        <td>
-                                            <%= row.id_sv.gioiTinh %>
-                                        </td>
-                                        <td>
-                                            <%= row.id_sv.ngaySinh %>
-                                        </td>
-
-                                        <td>
-                                            <a href="/sinhVien/edit/<%= row.id_sv._id %>">
-                                                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa"
-                                                    id="show-emp">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                            </a>
-                                            <button class="btn bg-warning-subtle btn-sm" style="font-size: 12px;" type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteModal" data-user-id="<%= row._id %>">
-                                                <i class="fas fa-trash-alt text-danger" style="font-size: 12px;"></i>
-                                            </button>
-
-                                            <a href="/sinhVien/chiTiet/<%= row.id_sv._id %>">
-                                                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa"
-                                                    id="show-emp">
-                                                    <i class="fas fa-info"></i>
-                                                </button>
-                                            </a>
-                                            
-                                        </td>
+                                        
+                                        
                                     </tr>
                                     </tr>
                                     <% }); %>
@@ -167,29 +129,31 @@
                     </div>
                 </div>
             </div>
-            
-   <!-- form xoá -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xoá Sinh viên</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="/sinhVien/delete" method="POST" id="formDelete">
-                    <input type="hidden" name="IdDelete" id="IdDelete">
-                        <div class="modal-body">
-                            Bạn có chắc muốn xoá Sinh viên này không?
-                        </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" class="btn btn-danger" id="confirmDeleteBtn">Xoá</button>
+        </div>
+
+<!-- modall xoá -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xoá Môn học</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                </form>
+                    <form action="/monhoc/delete" method="POST" id="formDelete">
+                        <input type="hidden" name="IdDelete" id="IdDelete">
+                            <div class="modal-body">
+                                Bạn có chắc muốn xoá Môn học này không?
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                            <button type="submit" class="btn btn-danger" id="confirmDeleteBtn">Xoá</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
         <!-- đít -->
         <footer class="text-center text-lg-start bg-white text-muted ">
             <!-- Copyright -->
@@ -216,9 +180,9 @@
     <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
 
+    <!-- data model xoa -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"></script>
-
 
     <script type="text/javascript">
         $('#sampleTable').DataTable();

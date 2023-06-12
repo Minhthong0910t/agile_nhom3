@@ -26,7 +26,7 @@
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="#"><b><%= objClass.tenLop %></b></a></li>
+                <li class="breadcrumb-item active"><a href="/lop">Danh sách lớp </a>> <a href="/lop/listSV/<%= objClass._id %>"><b><%= objClass.tenLop %></b></a></li>
             </ul>
             <div><%= msg %></div>
             <div id="clock"></div>
@@ -40,10 +40,10 @@
                             <div class="col-sm-2">
                                 <a class="btn btn-add btn-sm" href="/lop/listSV/<%= objClass._id %>/addSV" title="Thêm" id="show-emp"><i
                                     class="fas fa-plus"></i>Thêm sinh viên</a>
-                               
+
                             </div>
                             <div class="col-sm-2">
-                                <a class="btn btn-add btn-sm" href="/diem" title="Thêm" id="show-emp"><i
+                                <a class="btn btn-add btn-sm" href="/diem/<%= objClass._id %>/listMH" title="Thêm" id="show-emp"><i
                                         class="fas fa-list"></i>
                                     Xem danh sách điểm</a>
                             </div>
@@ -55,7 +55,7 @@
                            
                             <!-- thanh tìm kiếm -->
                             <form role="search" style=" margin-top: 20px; margin-bottom: 30px; display: flex; float: right;">
-                            <input class="form-control col-6 col-sm-6 col-md-9" type="search" placeholder="Tìm tên sinh viên..." aria-label="Search" name="tenSV">
+                            <input class="form-control col-6 col-sm-6 col-md-9" type="search" placeholder="Tìm MSSV..." aria-label="Search" name="MSSV">
                             <button class="btn btn-outline-info"  style="margin: 0px;" type="submit"><i style="height: 20px; padding-top: 6px; " class=' bx bx-search-alt-2'></i></button>
                             </form>
                         </div>
@@ -74,7 +74,7 @@
                                 <% list.forEach((row)=> { %>
                                     <tr>
                                         <td>
-                                            <%= row.id_sv._id %>
+                                            <%= row.id_sv.MSSV %>
                                         </td>
                                         <td>
                                             <%= row.id_sv.tenSV %>
@@ -96,7 +96,6 @@
                                                     data-bs-target="#deleteModal" data-user-id="<%= row._id %>">
                                                 <i class="fas fa-trash-alt text-danger" style="font-size: 12px;"></i>
                                             </button>
-                                            
                                         </td>
                                     </tr>
                                     </tr>

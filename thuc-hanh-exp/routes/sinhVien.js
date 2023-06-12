@@ -19,6 +19,7 @@ router.post('/add',check_login.yeu_cau_dang_nhap, sinhVienCtrl.add);
 router.get('/edit/:idsv',check_login.yeu_cau_dang_nhap, sinhVienCtrl.edit);
 router.post('/edit/:idsv',check_login.yeu_cau_dang_nhap, sinhVienCtrl.edit);
 
+router.get('/chiTiet/:idsv',check_login.yeu_cau_dang_nhap, sinhVienCtrl.chiTiet);
 //delete
 router.post('/delete',sinhVienCtrl.delete);
 

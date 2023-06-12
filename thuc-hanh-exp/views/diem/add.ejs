@@ -26,7 +26,12 @@
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="#"><b>Tạo điểm mới</b></a></li>
+                <li class="breadcrumb-item active">
+                    <a href="/lop/listSV/<%= objClass._id %>"><%= objClass.tenLop %></a> > 
+                    
+                    <a href="/diem/<%= objClass._id %>/listMH/<%= objSubject._id %>"><%= objSubject.tenMH  %></a> >
+                    <a href=""><b>Tạo điểm</b></a>
+                </li>
             </ul>
             <span><%= msg %></span>
             <div id="clock"></div>
@@ -34,29 +39,38 @@
         <!--MODAL add-->
 
        <!--MODAL add-->
-   
-                <form action="" method="post">
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label class="control-label">Tên môn học</label>
-                            <select class="form-control" name="tenMH">
-                                <% listMH.forEach( row => { %>
-                                    <option value="<%= row._id %>"><%= row.tenMH %></option>
-                                <% }); %>
-                            </select>
-                            <label class="control-label">Điểm Quiz</label>
-                            <input class="form-control" type="number" name="diemQuiz">
-                            <label class="control-label">Điểm Lab</label>
-                            <input class="form-control" type="number" name="diemLab">
-                            <label class="control-label">Điểm Assignment</label>
-                            <input class="form-control" type="number" name="diemASM">
-                            <label class="control-label">Điểm Thi</label>
-                            <input class="form-control" type="number" name="diemThi">
-                        </div>
-                    </div><BR> <BR> <BR>
-                    <button type="submit" class="btn btn-primary">Lưu lại</button>
-                    <a class="btn btn-cancel" data-dismiss="modal" href="/diem">Hủy bỏ</a>
-                </form>
+                
+                    
+                    <form action="" method="post"class="form-group ">
+                        <div style="display: flex;">
+                            <div class="form-group col-md-6 form-select">
+                                <label class="control-label">Sinh viên</label>
+                                <select class="form-select" style="min-width: 100%;" name="sinhVien">
+                                    <% listSV.forEach((row)=> { %>
+                                        <option value='<%= JSON.stringify(row.id_sv) %>'><%= row.id_sv.MSSV %> - <%= row.id_sv.tenSV %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Tên môn học</label>
+                                <input class="form-control" value="<%= objSubject.tenMH %>" disabled>
+                                <label class="control-label">Điểm Quiz</label>
+                                <input class="form-control" type="number" name="diemQuiz">
+                                <label class="control-label">Điểm Lab</label>
+                                <input class="form-control" type="number" name="diemLab">
+                                <label class="control-label">Điểm Assignment</label>
+                                <input class="form-control" type="number" name="diemASM">
+                                <label class="control-label">Điểm Thi</label>
+                                <input class="form-control" type="number" name="diemThi">
+                                <BR> <BR> <BR>
+                                    <button type="submit" class="btn btn-primary">Lưu lại</button>
+                                    <a class="btn btn-cancel" data-dismiss="modal" href="/diem/<%= objClass._id %>/listMH/<%= objSubject._id %>">Hủy bỏ</a>
+                            </div>
+                        </div><BR> <BR> <BR>
+                       
+                    </form>
+                
+                
                 <BR>
            
 <!-- hết MODAL add-->
@@ -165,6 +179,11 @@
             $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
             e.stopImmediatePropagation();
         });
+    </script>
+    <script>
+        function goBack() {
+        window.history.back();
+        }
     </script>
 </body>
 

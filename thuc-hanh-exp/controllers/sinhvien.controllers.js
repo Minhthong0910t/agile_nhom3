@@ -1,20 +1,27 @@
 var myModel = require('../models/agile.models');
-const mongoose = require('mongoose');
 
+var msg='';
 
 exports.list = async(req, res, next) => {
-    let msg = '';
+     msg = '';
     let timKiem = null;
-    if (req.query.tenSV != '' && String(req.query.tenSV) != 'undefined') {
-        timKiem = { tenSV: req.query.tenSV }
+    let regex = new RegExp(req.query.MSSV, "i"); 
+
+    if (req.query.MSSV != '' && String(req.query.MSSV) != 'undefined') {
+        let student = await myModel.studentModel.findOne({ MSSV: regex });
+        if(student){
+            timKiem = { id_sv: student._id };
+        }else{
+            timKiem = null;
+        }
     }
-    let list = await myModel.studentModel.find(timKiem);
-    let listds = await myModel.studentListModel.find().populate('id_sv').populate('id_diem').populate('id_lop');
+    let listds = await myModel.studentListModel.find(timKiem).populate('id_sv').populate('id_diem').populate('id_lop');
+
     res.render('sinhvien/list', {req: req, msg: msg, list: listds});
 }
 
 exports.add = async(req, res, next) => {
-    let msg = '';
+     msg = '';
     if(req.method == 'POST'){
 
         try {
@@ -26,14 +33,14 @@ exports.add = async(req, res, next) => {
             while (true) {
               // Tạo MSSV ngẫu nhiên
               const randomNumber = Math.floor(Math.random() * 100000);
-                MSSV = 'PH' + String(randomNumber).padStart(5, '0');
+                MSSV = 'PH' + String(randomNumber).padStart(5, '0');  // luôn lấy chuỗi 5 số sau PH
         
          // Kiểm tra xem MSSV mới tạo có bị trùng lặp không
               const existingMSSV = existingStudents.some(student => student._id === MSSV);
               if (!existingMSSV) break; // Nếu không trùng lặp, thoát vòng lặp
             }
             // Gán giá trị MSSV vào _id
-            const newStudent = new myModel.studentModel({ _id: MSSV, tenSV : req.body.tenSV , gioiTinh : req.body.gioiTinh, ngaySinh : req.body.ngaySinh});
+            const newStudent = new myModel.studentModel({ MSSV: MSSV, tenSV : req.body.tenSV , gioiTinh : req.body.gioiTinh, ngaySinh : req.body.ngaySinh});
 
             let objStdList = new myModel.studentListModel();
             objStdList.id_sv = newStudent._id;
@@ -53,7 +60,7 @@ exports.add = async(req, res, next) => {
 }
 
 exports.edit = async(req, res, next) => {
-    let msg = '';
+     msg = '';
     let idsv = req.params.idsv;
     let objStudent = await myModel.studentModel.findById(idsv);
     if(req.method == 'POST'){
@@ -66,7 +73,7 @@ exports.edit = async(req, res, next) => {
             await myModel.studentModel.findByIdAndUpdate(idsv, objStudent);
             msg = 'Sửa thành công';
         } catch (err){
-            msg = 'Sửa thất bại'
+            msg = 'Sửa thất bại';
             console.log(err);
         }
     }
@@ -79,14 +86,33 @@ exports.delete= async (req,res,next)=>{
         return res.status(404).json({ success: false, message: 'Không tìm thấy document' });
     }
 
+    console.log(studentList, "XÓA SINH VIÊN NÀY");
     // Xóa document sinh viên trong collection "studentModel   
     await myModel.studentModel.deleteOne({_id: studentList.id_sv});
 
     // Xóa document liên quan trong collection "markModel"
-    await myModel.markModel.deleteOne({_id: studentList.id_diem});
+    await myModel.markModel.deleteMany({_id: studentList.id_diem});
+    await myModel.markModel.deleteMany({id_sv: studentList.id_sv});
     
     // Xóa document sinh viên trong collection "studentListModel"
     await myModel.studentListModel.deleteOne({_id: req.body.IdDelete});
     
     res.redirect('/sinhVien');  
+}
+
+exports.chiTiet = async (req,res,next)=>{
+    let id = req.params.idsv;
+
+    const objStudent = await myModel.studentModel.findById(id);
+
+    const objMark = await myModel.markModel.find({id_sv : id}).populate('id_sv').populate('id_monHoc').populate('id_lop');
+    
+    
+    if (!objStudent) {
+
+        return res.status(404).json({ success: false, message: 'Không tìm thấy document' });
+    }
+
+    
+    res.render('sinhVien/detail',{req: req, msg: msg , objStudent: objStudent, list : objMark});  
 }

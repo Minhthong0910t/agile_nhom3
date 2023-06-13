@@ -15,7 +15,10 @@ exports.list = async(req, res, next) => {
             timKiem = null;
         }
     }
-    let listds = await myModel.studentListModel.find(timKiem).populate('id_sv').populate('id_diem').populate('id_lop');
+    if(req.query.MSSV == 'PH' || req.query.MSSV == 'pH' || req.query.MSSV == 'pH' || req.query.MSSV == 'ph'){
+        timKiem = null;
+    }
+    let listds = await myModel.studentListModel.find(timKiem).populate('id_sv').populate('id_diem').populate('id_lop').sort({'id_sv.MSSV' : 1});
 
     res.render('sinhvien/list', {req: req, msg: msg, list: listds});
 }

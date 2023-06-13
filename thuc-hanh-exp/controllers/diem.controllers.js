@@ -1,3 +1,4 @@
+const { Types } = require('mongoose');
 var diemModel = require('../models/agile.models');
 var msg = '';
 
@@ -69,8 +70,11 @@ exports.add = async(req, res, next) => {
     let idlop = req.params.idlop;
     const objClass = await diemModel.classModel.findById(idlop);
 
-    let listSV = await diemModel.studentListModel.find({id_lop : idlop}).populate('id_sv').populate('id_diem').populate('id_lop');
-    
+    let listSV = await diemModel.studentListModel.find({id_lop : { $in: [new Types.ObjectId(objClass._id)]}})
+    .populate('id_sv')
+    .populate('id_diem')
+    .populate('id_lop');
+
     console.log(listSV, '1221');
     let idMH = req.params.idMH;
     const objSubject = await diemModel.subjectModel.findById(idMH);
@@ -80,8 +84,12 @@ exports.add = async(req, res, next) => {
             console.log(req.body , 'Giá trị Body');
             console.log(req.body.sinhVien, 'Sinh Viên');
             // Parse đối tượng Sinh viên từ giá trị được submit
-            const sv = JSON.parse(req.body.sinhVien);
+           
+            if(!req.body.sinhVien || req.body.sinhVien === undefined || req.body.sinhVien === null){
+                msg = 'Không có sinh viên trong lớp học này.'
+            }else{
             try{
+                const sv = JSON.parse(req.body.sinhVien);
                 const studentList = await addMarkToStudent(idMH , idlop, sv._id, req.body.diemQuiz, req.body.diemLab, req.body.diemASM, req.body.diemThi);
                 console.log(studentList,'LIstVINH VIEN');
                 if (studentList) {
@@ -93,6 +101,7 @@ exports.add = async(req, res, next) => {
                 msg = 'Thêm thất bại' + err
                 console.log(err);
             }
+        }
     }
     res.render('diem/add', {req: req, msg: msg, listSV: listSV, objSubject:objSubject , objClass: objClass});
 }

@@ -40,7 +40,7 @@ let subjectModel = db.mongoose.model('subjectModel', subjectSchema);
 
 const studentListSchema = new db.mongoose.Schema(
     {
-        id_lop: {type: db.mongoose.Schema.Types.ObjectId, ref: 'classModel'},
+        id_lop: {type: db.mongoose.Schema.Types.Array, ref: 'classModel'},
         id_sv: {type: db.mongoose.Schema.Types.ObjectId, ref: 'studentModel'},
         id_diem: {type: db.mongoose.Schema.Types.ObjectId, ref: 'markModel'},
     }, {collection: 'dsSinhVien'}

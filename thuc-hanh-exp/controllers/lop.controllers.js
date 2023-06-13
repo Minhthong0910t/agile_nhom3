@@ -22,7 +22,10 @@ exports.listSV = async (req, res, next) => {
     }
 
     const objClass = await myMD.classModel.findById(id);
-    let list = await myMD.studentListModel.find({id_lop : id, timKiem}).populate('id_sv').populate('id_diem').populate('id_lop');
+    let list = await myMD.studentListModel.find({id_lop : { $in: [new Types.ObjectId(objClass._id)]}, timKiem})
+    .populate('id_sv')
+    .populate('id_diem')
+    .populate('id_lop');
     res.render('lop/listSV', { list : list, req: req , msg: msg, objClass: objClass});
 }
 
@@ -68,37 +71,45 @@ exports.addSV = async (req, res, next) => {
                 console.log(id_sv, "ID SINH VIEN");
                 const exitstudentList = await myMD.studentListModel.findOne({id_sv: id_sv}).populate('id_sv').populate('id_diem').populate('id_lop');
                             
-                if(Array.isArray(exitstudentList.id_lop)){
+                if(Array.isArray(exitstudentList.id_lop) && exitstudentList.id_lop.length > 0){
+                    console.log('Trường hợp là mảng đã có giá trị')
                     
-                    const lopDaCo = exitstudentList.id_lop.find(lop => lop.toString() === id);
-                    if (lopDaCo) { // Nếu sinh viên đã tồn tại trong lớp
+                    console.log(exitstudentList.id_lop, 'MẢNG LỚP CÓ GÌ');
+                    console.log(exitstudentList.id_lop.includes(new Types.ObjectId(objClass._id)), "GIÁ TRỊ GÌ ĐÂY");
+                    console.log(exitstudentList.id_lop.find(id => id.toString() === objClass._id.toString()), "GIÁ TRỊ GÌ ĐÂY");
+                    const index = exitstudentList.id_lop.findIndex(item => item._id.toString() === objClass._id.toString());
+                    console.log(index, "GIÁ TRỊ INDEX");
+                    if (index !== -1) { // Nếu sinh viên đã tồn tại trong lớp
                         msg = `Sinh viên ${sv.tenSV} đã có trong lớp này.`;
                       } else {
-                        exitstudentList.id_lop.push(id); // Thêm id mới vào mảng id_lop
-                        await exitstudentList.save();
-                        msg = 'Thêm thành công';
+                        await myMD.studentListModel.findOneAndUpdate(
+                            { id_sv: id_sv }, // Tìm document có id_sv tương ứng
+                            { $push: { id_lop: new Types.ObjectId(objClass._id) } }, // Thêm giá trị mới vào mảng id_lop
+                            { new: true } // Trả về document sau khi đã được cập nhật
+                        );
+                        msg = 'Thêm Thành Công.';
                         return res.render('lop/addSV', { msg: msg, req: req, objClass: objClass, list: list});
                       }
 
                     return res.render('lop/addSV', { msg: msg, req: req, objClass: objClass, list: list});
                 }else {
-                    const studentList = await myMD.studentListModel.findOne({id_sv: id_sv, id_lop : id}).populate('id_sv').populate('id_diem').populate('id_lop');
+                    console.log('Trường hợp là mảng chưa có giá trị')
+                    exitstudentList.id_lop = [];
+                    const studentList = await myMD.studentListModel.findOne({id_sv: id_sv, id_lop : { $in: [new Types.ObjectId(objClass._id)]}}).populate('id_sv').populate('id_diem').populate('id_lop');
                     if(studentList){
                         msg = `Sinh viên ${sv.tenSV} đã có trong lớp này.`;
                         return res.render('lop/addSV', { msg: msg, req: req, objClass: objClass, list: list});
                     }else{
-                        
-                        const studentList = new myMD.studentListModel({
-                            id_lop : objClass._id
-                        });
-                        
-                        await myMD.studentListModel.findByIdAndUpdate(studentList._id, studentList);
-                        msg = 'Thêm Thành Công.'
+                        await myMD.studentListModel.findOneAndUpdate(
+                            { id_sv: id_sv }, // Tìm document có id_sv tương ứng
+                            { $push: { id_lop: new Types.ObjectId(objClass._id) } }, // Thêm giá trị mới vào mảng id_lop
+                            { new: true } // Trả về document sau khi đã được cập nhật
+                        );
+                        msg = 'Thêm Thành Công.';
                     }
+                    console.log(studentList, "CẬP NHẬT LỚP CHO SV");
                 }
-                 
-                
-                
+
             } catch (error) {
                 msg = "Lỗi ghi CSDL" + error.message;
                 console.log(error);
@@ -144,10 +155,14 @@ exports.deleteSV= async (req,res,next)=>{
         if (!studentList) {
             return res.status(404).json({ success: false, message: 'Không tìm thấy document' });
         }
+        
         studentList.id_lop = null ;
         
-
-        await myMD.studentListModel.findByIdAndUpdate(studentList._id, studentList);
+        await myMD.studentListModel.findOneAndUpdate(
+            { id_sv: studentList._id }, // Tìm document có id_sv tương ứng
+            { $pull: { id_lop: new Types.ObjectId(objClass._id) } }, //Xóa giá trị mảng id_lop
+            { new: true } // Trả về document sau khi đã được cập nhật
+        );
         // Xóa document liên quan trong collection "markModel"
         await myMD.markModel.deleteMany({id_sv : studentList.id_sv, id_lop : id });
 

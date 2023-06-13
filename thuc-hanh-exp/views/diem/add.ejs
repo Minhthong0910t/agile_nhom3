@@ -55,13 +55,13 @@
                                 <label class="control-label">Tên môn học</label>
                                 <input class="form-control" value="<%= objSubject.tenMH %>" disabled>
                                 <label class="control-label">Điểm Quiz</label>
-                                <input class="form-control" type="number" name="diemQuiz">
+                                <input class="form-control" min="0" max="10" type="number" name="diemQuiz">
                                 <label class="control-label">Điểm Lab</label>
-                                <input class="form-control" type="number" name="diemLab">
+                                <input class="form-control" min="0" max="10" type="number" name="diemLab">
                                 <label class="control-label">Điểm Assignment</label>
-                                <input class="form-control" type="number" name="diemASM">
+                                <input class="form-control" min="0" max="10" type="number" name="diemASM">
                                 <label class="control-label">Điểm Thi</label>
-                                <input class="form-control" type="number" name="diemThi">
+                                <input class="form-control" min="0" max="10" type="number" name="diemThi">
                                 <BR> <BR> <BR>
                                     <button type="submit" class="btn btn-primary">Lưu lại</button>
                                     <a class="btn btn-cancel" data-dismiss="modal" href="/diem/<%= objClass._id %>/listMH/<%= objSubject._id %>">Hủy bỏ</a>

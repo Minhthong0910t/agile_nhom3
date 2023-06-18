@@ -1,10 +1,17 @@
+const md = require('../models/user.models');
+const myModel = require('../models/agile.models');
 const bcrypt = require('bcrypt');
 var msg = '';
 exports.home = async (req, res, next) => {
 
-    res.render('home/home', {req : req , msg: msg});
+    let countUser = await md.userModel.countDocuments({});
+    let countSudent = await myModel.studentListModel.countDocuments({});
+
+    console.log(`Tổng số user: ${countUser}`,`Tổng số sinh viên: ${countSudent}`);
+
+    res.render('home/home', {req : req , msg: msg, countUser: countUser, countSudent:countSudent});
 }
-const md = require('../models/user.models');
+
 
 exports.Login = async (req, res, next) => {
     let msg='';
@@ -22,7 +29,7 @@ exports.Login = async (req, res, next) => {
             else if(user1 && password == user1.password){
             console.log("Đăng nhập thành công.");
             req.session.userLogin=user1;
-             return res.render('home/home', {req: req});
+             return res.redirect('/');
             }
           } catch (error) {
             console.error(error);
